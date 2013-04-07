@@ -29,6 +29,9 @@ function quandl(id::String)
                   Date = $time_array
                   Value = float($sa[:,2])
                   end)
+
+  df["Date"] = IndexedVector(df["Date"]);
+
   flipud(df)
 end
 
