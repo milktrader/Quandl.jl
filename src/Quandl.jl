@@ -15,22 +15,27 @@ export quandl,
 
 function quandl(id::String)
   qdata = readlines(`curl -s "http://www.quandl.com/api/v1/datasets/$id.csv"`)
+
   name_string = qdata[1]
   val_string = qdata[2:end]
 
-  sa  = split(val_string[1], ",")'
-  for i in 2:length(val_string)         
-    sa  = [sa ; split(val_string[i], ",")']
-  end
-  
-  time_array = Calendar.parse("yyyy-MM-dd", sa[:,1])
- 
-  df = DataFrame(quote       
-                  Date = $time_array
-                  Value = float($sa[:,2])
-                  end)
+  na  = split(name_string, ",")'
+  va  = split(val_string[1], ",")'
 
-  df["Date"] = IndexedVector(df["Date"]);
+  for i in 2:length(val_string)         
+    va  = [va ; split(val_string[i], ",")']
+  end
+
+  time_array = parse_date("yyyy-MM-dd", va[:,1])
+
+  df = @DataFrame("" => time_array)
+
+  for i in 2:length(na)
+    colname  = na[i]
+    within!(df, :($colname = float($va[:,$i])))
+  end
+
+  df[""] = IndexedVector(df[""])
 
   flipud(df)
 end
