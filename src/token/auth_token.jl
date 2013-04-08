@@ -1,1 +1,1 @@
-You are limited to 10 downloads per day until you replace this text with your Quandl authorization token
+Please insert your custom auth token in this file. Delete the contents first.

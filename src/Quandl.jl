@@ -1,8 +1,8 @@
-using DataFrames, Calendar, TimeSeries
+using DataFrames, Calendar
 
 module Quandl
 
-using DataFrames, Calendar, TimeSeries
+using DataFrames, Calendar
 
 import Base.show
 
@@ -13,26 +13,22 @@ export quandl,
 ###### API ######################
 #################################
 
-#function quandl(id::String, nrows::Int, period::String)
-function quandl(id::String)
+function quandl(id::String, rows::Int, period::String)
 
-  a_token = open(readall, Pkg.dir("Quandl/src/token/auth_token.jl")) 
+  auth_token = open(readall, Pkg.dir("Quandl/src/token/auth_token.jl")) 
  
-
-
-
 #   period=="d"?period="daily":
 #   period=="w"?period="weekly":
 #   period=="m"?period="monthly":
 #   period=="q"?period="quarterly":
 #   period=="a"?period="annual":period
 
-  if length(a_token) >  100
-    qdata = readlines(`curl -s "http://www.quandl.com/api/v1/datasets/$id.csv?sort_order=asc"`)
+  if length(auth_token) >  100
+    qdata = readlines(`curl -s "http://www.quandl.com/api/v1/datasets/$id.csv?sort_order=asc&rows=$rows&collapse=$period"`)
+  else
+    qdata = readlines(`curl -s "http://www.quandl.com/api/v1/datasets/$id.csv?sort_order=asc&rows=$rows&collapse=$period&auth_token=$auth_token"`)
   end
 
-  #qdata = readlines(`curl -s "http://www.quandl.com/api/v1/datasets/$id.csv?rows=$nrows&sort_order=asc&collapse=$period&auth_token=$a_token"`)
-  qdata = readlines(`curl -s "http://www.quandl.com/api/v1/datasets/$id.csv?sort_order=asc&auth_token=$a_token"`)
   name_string = qdata[1]
   val_string = qdata[2:end]
 
@@ -56,10 +52,15 @@ function quandl(id::String)
     within!(df, :($colname = float($va[:,$i])))
   end
 
-  df[""] = IndexedVector(df[""])
-#  if df[""][1] > df[""][2]
-#    flipud!(df)
+#  # correct the order if the DataFrame has more than 1 row 
+#  #if ~isempty(df[""][2]
+#  if nrow(df) > 1
+#    if df[""][1] > df[""][2]
+#      flipud!(df)
+#    end
 #  end
+
+   df[""] = IndexedVector(df[""])
   df
 end
 
