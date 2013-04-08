@@ -13,18 +13,32 @@ export quandl,
 ###### API ######################
 #################################
 
-function quandl(id::String, nrows::Int, period::String)
+#function quandl(id::String, nrows::Int, period::String)
+function quandl(id::String)
 
   a_token = open(readall, Pkg.dir("Quandl/src/token/auth_token.jl")) 
-  period=="d"?period="daily":
-  period=="w"?period="weekly":
-  period=="m"?period="monthly":
-  period=="q"?period="quarterly":
-  period=="a"?period="annual":period
+ 
 
-  qdata = readlines(`curl -s "http://www.quandl.com/api/v1/datasets/$id.csv?rows=$nrows&sort_order=asc&collapse=$period&auth_token=$a_token"`)
+
+
+#   period=="d"?period="daily":
+#   period=="w"?period="weekly":
+#   period=="m"?period="monthly":
+#   period=="q"?period="quarterly":
+#   period=="a"?period="annual":period
+
+  if length(a_token) >  100
+    qdata = readlines(`curl -s "http://www.quandl.com/api/v1/datasets/$id.csv?sort_order=asc"`)
+  end
+
+  #qdata = readlines(`curl -s "http://www.quandl.com/api/v1/datasets/$id.csv?rows=$nrows&sort_order=asc&collapse=$period&auth_token=$a_token"`)
+  qdata = readlines(`curl -s "http://www.quandl.com/api/v1/datasets/$id.csv?sort_order=asc&auth_token=$a_token"`)
   name_string = qdata[1]
   val_string = qdata[2:end]
+
+  if length(val_string) < 1
+    error("you've probably exceeded your daily limit:\n 10 without token, 100 with a auth token")
+  end
 
   na  = split(name_string, ",")'
   va  = split(val_string[1], ",")'
