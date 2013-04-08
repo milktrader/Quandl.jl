@@ -23,7 +23,7 @@ function quandl(id::String, rows::Int, period::String)
 #   period=="q"?period="quarterly":
 #   period=="a"?period="annual":period
 
-  if length(auth_token) >  100
+  if length(auth_token) >  50
     qdata = readlines(`curl -s "http://www.quandl.com/api/v1/datasets/$id.csv?sort_order=asc&rows=$rows&collapse=$period"`)
   else
     qdata = readlines(`curl -s "http://www.quandl.com/api/v1/datasets/$id.csv?sort_order=asc&rows=$rows&collapse=$period&auth_token=$auth_token"`)
@@ -63,6 +63,8 @@ function quandl(id::String, rows::Int, period::String)
    df[""] = IndexedVector(df[""])
   df
 end
+
+quandl(id::String) = quanld(id::String, 100000, "")
 
 #################################
 ###### show #####################

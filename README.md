@@ -27,7 +27,27 @@ julia> using Quandl
 
 #various warning messages that can be safely ingored including one that overwrites the Calendar show method
 
+julia> head(quandl("GALLUP/GUNS1"))
+6x2 DataFrame:
+                   % of Homes with Guns
 
+[1,]    1960-12-31                  49.0
+[2,]    1968-12-31                  50.0
+[3,]    1972-12-31                  43.0
+[4,]    1975-12-31                  44.0
+[5,]    1978-12-31                  45.0
+[6,]    1983-12-31                  40.0
 
+julia> quandl("YAHOO/INDEX_GSPC", 6, "monthly")
+6x7 DataFrame:
+                      Open    High     Low   Close    Volume Adjusted Close
+
+[1,]    2012-11-30 1415.95 1418.86 1411.63 1416.18   3.966e9         1416.18
+[2,]    2012-12-31 1402.43 1426.74 1398.11 1426.19 3.20433e9         1426.19
+[3,]    2013-01-31 1501.96 1504.19 1496.76 1498.11 3.99988e9         1498.11
+[4,]    2013-02-28 1515.99 1525.34 1514.46 1514.68 3.91232e9         1514.68
+[5,]    2013-03-31 1562.86 1570.28 1561.08 1569.19 3.30444e9         1569.19
+[6,]    2013-04-05 1559.98 1559.98  1539.5 1553.28 3.51541e9         1553.28
 ````
 
+The default setting for the `quandl` function is 1 million rows and the default period. 
