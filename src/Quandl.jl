@@ -43,7 +43,8 @@ function quandl(id::String, rows::Int, period::String)
     va  = [va ; split(val_string[i], ",")']
   end
 
-  time_array = parse_date("yyyy-MM-dd", va[:,1])
+#  time_array = parse_date("yyyy-MM-dd", va[:,1]) # method not defined in master METADATA
+  time_array = Calendar.parse("yyyy-MM-dd", va[:,1])
 
   df = @DataFrame("" => time_array)
 
@@ -60,11 +61,11 @@ function quandl(id::String, rows::Int, period::String)
 #    end
 #  end
 
-   df[""] = IndexedVector(df[""])
+#   df[""] = IndexedVector(df[""]) # uncomment for Julia 0.2
   df
 end
 
-quandl(id::String) = quanld(id::String, 100000, "")
+quandl(id::String) = quandl(id::String, 100000, "none")
 
 #################################
 ###### show #####################
