@@ -74,7 +74,7 @@ function quandl(id::String, rows::Int, period::String)
   df
 end
 
-#quandl(id::String) = quandl(id::String, 100000, "none")
+quandl(id) = quandl(id::String, 100000, "")
 
 #################################
 ###### show #####################
