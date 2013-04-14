@@ -32,19 +32,28 @@ function quandl(id::String, rows::Int, period::String)
   name_string = qdata[1]
   val_string = qdata[2:end]
 
-  if length(val_string) < 1
+# elminate rows that have a date but no prices (market closed on a holiday)
+  va_valid = String[]
+  for i in 1:length(val_string)
+    if length(val_string[i]) > 20
+    push!(va_valid, val_string[i])
+    end
+  end
+
+  #if length(val_string) < 1
+  if length(va_valid) < 1
     error("you've probably exceeded your daily limit:\n 10 without token, 100 with a auth token")
   end
 
   na  = split(name_string, ",")'
-  va  = split(val_string[1], ",")'
-
-  for i in 2:length(val_string)         
-    va  = [va ; split(val_string[i], ",")']
+  va  = split(va_valid[1], ",")'
+  
+  for i in 1:length(va_valid)         
+    #va  = [va ; split(val_string[i], ",")']
+    push!(va,  split(val_string[i], ",")')
   end
 
   va
-
 
 ######## #  time_array = parse_date("yyyy-MM-dd", va[:,1]) # method not defined in master METADATA
 ########   time_array = Calendar.parse("yyyy-MM-dd", va[:,1])
