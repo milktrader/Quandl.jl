@@ -48,33 +48,30 @@ function quandl(id::String, rows::Int, period::String)
   na  = split(name_string, ",")'
   va  = split(va_valid[1], ",")'
   
-  for i in 1:length(va_valid)         
-    #va  = [va ; split(val_string[i], ",")']
-    push!(va,  split(val_string[i], ",")')
+  for i in 2:length(va_valid)         
+    va  = [va ; split(va_valid[i], ",")']
   end
 
-  va
+#  time_array = parse_date("yyyy-MM-dd", va[:,1]) # method not defined in master METADATA
+  time_array = Calendar.parse("yyyy-MM-dd", va[:,1])
 
-######## #  time_array = parse_date("yyyy-MM-dd", va[:,1]) # method not defined in master METADATA
-########   time_array = Calendar.parse("yyyy-MM-dd", va[:,1])
-######## 
-########   df = @DataFrame("Date" => time_array)
-######## 
-########   for i in 2:length(na)
-########     colname  = na[i]
-########     within!(df, :($colname = float($va[:,$i])))
-########   end
-######## 
-######## #  # correct the order if the DataFrame has more than 1 row 
-######## #  #if ~isempty(df[""][2]
-######## #  if nrow(df) > 1
-######## #    if df["Date"][1] > df["Date"][2]
-######## #      flipud!(df)
-######## #    end
-######## #  end
-######## 
-########    df["Date"] = IndexedVector(df["Date"]) # uncomment for Julia 0.2
-########   df
+  df = @DataFrame("Date" => time_array)
+
+  for i in 2:length(na)
+    colname  = na[i]
+    within!(df, :($colname = float($va[:,$i])))
+  end
+
+#  # correct the order if the DataFrame has more than 1 row 
+#  #if ~isempty(df[""][2]
+#  if nrow(df) > 1
+#    if df["Date"][1] > df["Date"][2]
+#      flipud!(df)
+#    end
+#  end
+
+   df["Date"] = IndexedVector(df["Date"]) # uncomment for Julia 0.2
+  df
 end
 
 #quandl(id::String) = quandl(id::String, 100000, "none")
