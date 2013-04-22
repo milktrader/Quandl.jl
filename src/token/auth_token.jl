@@ -1,1 +1,1 @@
-This file needs to be filled in with your specific auth token from Quandl. If you leave this file unchanged, Quandl will view you requests as anonymous and will limit you to 10 calls/day. 
+This file needs to have your unique auth token inserted. Please do so without spaces or new lines. Otherwise you'll be accessing Quandl anonymously. 

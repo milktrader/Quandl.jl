@@ -32,7 +32,7 @@ function quandl(id::String, rows::Int, period::String)
   name_string = qdata[1]
   val_string = qdata[2:end]
 
-# elminate rows that have a date but no prices (market closed on a holiday)
+# eliminate rows that have a date but no prices (market closed on a holiday)
   va_valid = String[]
   for i in 1:length(val_string)
     if length(val_string[i]) > 20
@@ -74,7 +74,7 @@ function quandl(id::String, rows::Int, period::String)
   df
 end
 
-quandl(id) = quandl(id::String, 100000, "")
+#quandl(id) = quandl(id::String, 100000, "") # trouble passing too many rows into GOOG
 
 #################################
 ###### show #####################
