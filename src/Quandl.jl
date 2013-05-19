@@ -35,7 +35,8 @@ function quandl(id::String, rows::Int, period::String)
 # eliminate rows that have a date but no prices (market closed on a holiday)
   va_valid = String[]
   for i in 1:length(val_string)
-    if length(val_string[i]) > 20
+    #if length(val_string[i]) > 20 # FRED DGS10 is length 16
+    if length(val_string[i]) > 15
     push!(va_valid, val_string[i])
     end
   end
