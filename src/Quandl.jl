@@ -4,8 +4,6 @@ module Quandl
 
 using TimeSeries
 
-import Base.show
-
 export quandl,
        @quandl # test macro
 
@@ -13,7 +11,7 @@ export quandl,
 ###### API ######################
 #################################
 
-function quandl(id::String)
+function quandl(id::String; rows=100, period="daily")
 
   auth_token = open(readall, Pkg.dir("Quandl/src/token/auth_token.jl")) 
 
