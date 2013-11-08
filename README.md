@@ -1,6 +1,6 @@
 ## Julia API to Quandl 
 
-[Quandl.com](http://www.quandl.com) is a lightweight interface to over 4 million open-source datasets. This package 
+[Quandl.com](http://www.quandl.com) is a lightweight interface to over seven million open-source datasets. This package 
 gives access to their api, and places the data in a time-aware DataFrame.
 
 You can use this package without an auth token, but it's recommended you get one from Quandl.com. You are limited to 10 downloads per day
@@ -18,7 +18,7 @@ not going to like it.
 Pkg.add("Quandl")
 ````
 
-The `quandl` method takes 1 positional argument and currently supports two keyword arguments, `period` and 'rows`. The positional
+The `quandl` method takes one positional argument and currently supports two keyword arguments, `period` and `rows`. The positional
 argument is the Quandl code for the database you wish to download. 
 
 ````julia
