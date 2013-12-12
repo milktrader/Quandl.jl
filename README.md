@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/JuliaStats/Quandl.jl.png)](https://travis-ci.org/JuliaStats/Quandl.jl)
+
 ## Julia API to Quandl 
 
 [Quandl.com](http://www.quandl.com) is a lightweight interface to over seven million open-source datasets. This package 
