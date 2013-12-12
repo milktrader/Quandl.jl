@@ -1,6 +1,4 @@
 using Base.Test
-using TimeSeries
-
 using Quandl
 
 my_tests = ["Quandl.jl"]
