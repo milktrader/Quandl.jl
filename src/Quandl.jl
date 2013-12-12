@@ -30,6 +30,6 @@ end
 ###### include ##################
 ##################################
 
-#include("testquandl.jl")
+include("../test/testmacro.jl")
 
 end #module

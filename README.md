@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/JuliaStats/Quandl.jl.png)](https://travis-ci.org/JuliaStats/Quandl.jl)
+[![Build Status](https://travis-ci.org/milktrader/Quandl.jl.png)](https://travis-ci.org/milktrader/Quandl.jl)
 
 ## Julia API to Quandl 
 

@@ -1,8 +1,9 @@
-require("test.jl")
+using Base.Test
+using TimeSeries
 
 using Quandl
 
-my_tests = ["test/Quandl.jl"]
+my_tests = ["Quandl.jl"]
 
 print_with_color(:cyan, "Running tests: ") 
 println("")
