@@ -4,12 +4,9 @@ module Quandl
 
 using TimeSeries
 
-export quandl,
-       @quandl # test macro
+export quandl
 
-#################################
 ###### API ######################
-#################################
 
 function quandl(id::String; rows=100, period="daily")
 
@@ -21,15 +18,11 @@ function quandl(id::String; rows=100, period="daily")
     qdata = download("http://www.quandl.com/api/v1/datasets/$id.csv?sort_order=asc&rows=$rows&collapse=$period&auth_token=$auth_token", "q.csv")
   end
 
-  qframe = readtime("q.csv")
+  qarray = readtimearray("q.csv")
+
   run(`rm q.csv`)
   
-  return qframe
+  return qarray
 end
-#################################
-###### include ##################
-##################################
-
-include("../test/testmacro.jl")
 
 end #module

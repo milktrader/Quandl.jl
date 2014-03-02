@@ -2,8 +2,7 @@
 
 ## Julia API to Quandl 
 
-[Quandl.com](http://www.quandl.com) is a lightweight interface to over seven million open-source datasets. This package 
-gives access to their api, and places the data in a time-aware DataFrame.
+[Quandl.com](http://www.quandl.com) is a lightweight interface to over seven million open-source datasets. 
 
 You can use this package without an auth token, but it's recommended you get one from Quandl.com. You are limited to 10 downloads per day
 without your unique token. A token gives you 100 calls per day. Once you get a token, you'll only need to replace the text in the 
@@ -23,51 +22,27 @@ Pkg.add("Quandl")
 The `quandl` method takes one positional argument and currently supports two keyword arguments, `period` and `rows`. The positional
 argument is the Quandl code for the database you wish to download. 
 
-````julia
-
-julia> head(quandl("GALLUP/GUNS1"))
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100   330  100   330    0     0   3018      0 --:--:-- --:--:-- --:--:--  3027
-6x2 DataFrame:
-              Year % of Homes with Guns
-[1,]    1960-12-31                 49.0
-[2,]    1968-12-31                 50.0
-[3,]    1972-12-31                 43.0
-[4,]    1975-12-31                 44.0
-[5,]    1978-12-31                 45.0
-[6,]    1983-12-31                 40.0
-
-````
-Using the `rows` kwarg.
 
 ````julia
-julia> tail(quandl("GOOG/NASDAQ_TSLA", rows=1000))
+julia> quandl("GOOG/NASDAQ_QQQ")
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-100 37633  100 37633    0     0  92899      0 --:--:-- --:--:-- --:--:-- 92920
-6x6 DataFrame:
-              Date   Open   High    Low  Close    Volume
-[1,]    2013-10-31 155.67 162.44  153.3 159.94 9.34046e6
-[2,]    2013-11-01  163.0  165.9 160.41 162.17 7.18058e6
-[3,]    2013-11-04  165.0 175.39 164.22  175.2 1.31204e7
-[4,]    2013-11-05  180.0 181.43 171.36 176.81 2.24671e7
-[5,]    2013-11-06 154.81 160.73 146.36 151.16 3.10717e7
-[6,]    2013-11-07 144.19 145.65 137.62 139.77 2.22847e7
-````
-Using the `period` kwarg.
+100  4350  100  4350    0     0   2448      0  0:00:01  0:00:01 --:--:--  2447
+100x5 TimeArray{Float64,2} 1999-03-10 to 1999-07-30
 
-````julia
-julia> head(quandl("YAHOO/INDEX_GSPC", period="monthly"))
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100  5097  100  5097    0     0   7313      0 --:--:-- --:--:-- --:--:--  7312
-6x7 DataFrame:
-              Date  Open  High   Low Close Volume Adjusted Close
-[1,]    1950-01-31 16.82 16.82 16.82 16.82 1.25e6          16.82
-[2,]    1950-02-28 17.28 17.28 17.28 17.28 1.71e6          17.28
-[3,]    1950-03-31 17.56 17.56 17.56 17.56 1.57e6          17.56
-[4,]    1950-04-30 17.96 17.96 17.96 17.96 2.19e6          17.96
-[5,]    1950-05-31 18.67 18.67 18.67 18.67 1.33e6          18.67
-[6,]    1950-06-30 19.14 19.14 19.14 19.14  1.7e6          19.14
+             Open   High    Low     Close   Volume
+1999-03-10 | 0.000  51.160  50.280  51.060  5232200.000
+1999-03-11 | 0.000  51.730  50.310  51.310  9688600.000
+1999-03-12 | 0.000  51.160  49.660  50.060  8743600.000
+1999-03-15 | 0.000  51.560  49.910  51.500  6369000.000
+...
+1999-07-26 | 0.000  57.120  55.780  55.880  10720000.000
+1999-07-27 | 0.000  57.880  56.520  57.000  13732800.000
+1999-07-28 | 0.000  58.440  56.950  58.120  10161800.000
+1999-07-29 | 0.000  57.500  56.310  56.880  13033800.000
+1999-07-30 | 0.000  57.750  56.510  56.590  10947400.000
 ````
+
+TimeSeries currently has issues showing lengthy row names.
+
+Support for DataFrames is planned. 
