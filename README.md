@@ -24,7 +24,7 @@ argument is the Quandl code for the database you wish to download.
 
 
 ````julia
-a> quandl("GOOG/NASDAQ_QQQ")
+julia> quandl("GOOG/NASDAQ_QQQ")
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100  4590  100  4590    0     0   4513      0  0:00:01  0:00:01 --:--:--  4517
