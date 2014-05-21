@@ -1,5 +1,5 @@
 using FactCheck
 
-include("readwrite.jl")
+include("auth_token.jl")
 
 exitstatus()

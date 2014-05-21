@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/milktrader/Quandl.jl.png)](https://travis-ci.org/milktrader/Quandl.jl)
+[![Package Evaluator](http://iainnz.github.io/packages.julialang.org/badges/Quandl_0.3.svg)](http://iainnz.github.io/packages.julialang.org/?pkg=Quandl&ver=0.3)
 
 ## Julia API to Quandl 
 

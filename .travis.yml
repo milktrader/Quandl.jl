@@ -15,4 +15,4 @@ script:
     - julia -e 'Pkg.add("TimeSeries"); Pkg.add("FactCheck")'
     - mkdir -p ~/.julia/Quandl
     - cp -R ./* ~/.julia/Quandl/
-    - julia ./test/travis.jl
+    - julia ./test/runtests.jl
