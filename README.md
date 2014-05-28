@@ -16,7 +16,7 @@ will make an anonymous call.
 Pkg.add("Quandl")
 ````
 
-The `quandl` method takes one positional argument and currently supports three keyword arguments, `period`, `rows` and `format`. The positional
+The `quandl` method takes one positional argument and currently supports four keyword arguments, `order`, `period`, `rows` and `format`. The positional
 argument is the Quandl code for the database you wish to download. 
 
 
