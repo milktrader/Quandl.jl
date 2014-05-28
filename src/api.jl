@@ -11,8 +11,7 @@ function quandl(id::String; rows=100, period="daily", format="TimeArray")
     if format == "TimeArray"
         timearray(rq) 
     elseif format == "DataFrame" 
-        print_with_color(:yellow, "DataFrame format not supported yet - please submit a PR") 
-        println("")
+        dataframe(rq)
     else
         print_with_color(:yellow, "wat? If you want this format, please submit a PR. :-)")
         println("")
