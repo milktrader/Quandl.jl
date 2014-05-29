@@ -13,6 +13,6 @@ before_install:
 script:
     - julia -e 'versioninfo(); Pkg.init();'
     - julia -e 'Pkg.add("TimeSeries"); Pkg.add("FactCheck")'
-    - mkdir -p ~/.julia/Quandl
-    - cp -R ./* ~/.julia/Quandl/
+    - mkdir -p ~/.julia/v0.3/Quandl
+    - cp -R ./* ~/.julia/v0.3/Quandl/
     - julia ./test/runtests.jl
