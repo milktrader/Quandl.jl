@@ -1,5 +1,4 @@
-# function timearray(response::Requests.Response)
-function timearray(response)
+function timearray(response::Requests.Response)
 	#This function transform the Response object on a TimeArray
 
 	# Split the data on every "\n"
