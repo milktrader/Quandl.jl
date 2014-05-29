@@ -1,33 +1,31 @@
-#function timearray(rq::Response)
-function timearray(rq)
+# function timearray(response::Requests.Response)
+function timearray(response)
+	#This function transform the Response object on a TimeArray
 
-########### start dealing with SubStrings, which are confusing, hence the comments
-head = split(rq.data, "\n")[1]
-# "Date,Open,High,Low,Close,Volume"
+	# Split the data on every "\n"
+	data = split(response.data, "\n")
 
-body = split(rq.data, "\n")[2:end]
-# remove trailing empty string if it's there
-length(body[length(body)]) == 0 ? body = body[1:length(body)-1] : nothing
+	# Extract the head and body of the data
+	head = data[1]	
+	body = data[2:end]
 
-# split on comma
-bd = [split(body[i], ",") for i in 1:length(body)]
+	# Parse body	
+	body[end] == "" ? pop!(body) : nothing # remove trailing empty string if it's there
+	body      = [split(line, ",") for line in body] # split on comma
 
-######### timestamp
-# take the first row (assuming it's date)
-# TODO: regex query needed to catch edge cases
-t = [bd[i][1] for i in 1:length(bd)]
-# parse date 
-tstamp = Date{ISOCalendar}[date(d) for d in t[1:length(t)]]
+	######### Timestamp
+	# take the first row (assuming it's date)
+	# TODO: regex query needed to catch edge cases
+	dates     = [line[1] for line in body]
+	timestamp = Date{ISOCalendar}[date(d) for d in dates] # parse dates
 
-######### values 
-# get rows 2 to the end
-v = [bd[i][2:end] for i in 1:length(bd)]
-# SubString{ASCIIString}["88.94","89.48","88.8","89.23","30617089.0"]
-vals= ss2float(v)
+	######### Values 
+	vals = [line[2:end] for line in body] # get rows 2 to the end
+	vals = ss2float(vals) # SubString{ASCIIString}["88.94","89.48","88.8","89.23","30617089.0"]
 
-####### colnames
-snames = split(head,",")[2:end] # don't need the Date name for TimeArray
-cnames = ASCIIString[s for s in snames]
+	######### Column names
+	names = split(head, ",")[2:end] # Won't need the Date name (fist column) for TimeArray
+	names = ASCIIString[name for name in names]
 
-TimeArray(tstamp, vals, cnames)
+	TimeArray(timestamp, vals, names)
 end
