@@ -1,31 +1,20 @@
 # function dataframe(rq::Response)
-
-function dataframe(rq)
-
-	buff = PipeBuffer()  # open a buffer in which to dump data
-	df = DataFrame() # init empty DataFrame
+function dataframe(response)
+	buffer = PipeBuffer() # open a buffer in which to dump data
+	df     = DataFrame()  # init empty DataFrame
 
 	try
-		# get data from rq and split into an array
-		data = rq.data
-		data = chomp(data)
-		data = split(data, "\n");
-		
-		# write each line to the PipeBuffer
-		for i = 1:length(data)
-	    	write(buff, data[i], "\n")
-		end	
+		# Write the data to the buffer
+	    write(buffer, response.data)
 
-		# use DataFrame's readtable to read the data directly from buffer
-		df = readtable(buff)
+		# Use DataFrame's readtable to read the data directly from buffer
+		df = readtable(buffer)
 		
-		# convert date to DateTime object
-		df[:Date] = Date{ISOCalendar}[date(d) for d in df[:, 1]]
-
+		# Convert dates to DateTime object
+		df[:Date] = Date{ISOCalendar}[date(d) for d in df[:Date]]
 	finally
-		close(buff)
+		close(buffer)	
 	end
 
-	df
-
+	return df
 end
