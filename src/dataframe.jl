@@ -1,5 +1,5 @@
-# function dataframe(rq::Response)
-function dataframe(response)
+function dataframe(response::Requests.Response)
+
 	buffer = PipeBuffer() # open a buffer in which to dump data
 	df     = DataFrame()  # init empty DataFrame
 
