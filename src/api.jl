@@ -23,6 +23,9 @@ function quandlget(id::String; order="des", rows=100, period="daily", transforma
     end
 end
 
+# alias quandl/quandlget
+quandl(args) = quandlget(args) 
+
 function quandlsearch(query::ASCIIString, page="1", results="20", format="Dict")
 
     # Parsing query argument
