@@ -4,7 +4,7 @@ module Quandl
 
     using Datetime, TimeSeries, Requests, DataFrames
     
-    export quandlget, quandlsearch
+    export quandlget, quandl, quandlsearch
     
     include("api.jl")
     include("timearray.jl")
