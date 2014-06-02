@@ -22,3 +22,18 @@ function quandl(id::String; order="des", rows=100, period="daily", transformatio
         error("Invalid $format format. If you want this format implemented, please report an issue or submit a pull request.")
     end
 end
+
+
+function set_auth_token(token::String)
+
+	# TODO: Verify if the token is valid
+	token_file = open(Pkg.dir("Quandl/src/token/auth_token.jl"), "w")
+
+	try
+		write(token_file, token * "\n") # Put a newline after the token
+	finally
+	    close(token_file)
+	end
+
+	return nothing
+end

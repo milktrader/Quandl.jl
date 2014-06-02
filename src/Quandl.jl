@@ -4,7 +4,7 @@ module Quandl
 
 using Datetime, TimeSeries, Requests, DataFrames
 
-export quandl
+export quandl, set_auth_token
 
 include("api.jl")
 include("timearray.jl")
