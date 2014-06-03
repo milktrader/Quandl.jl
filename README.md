@@ -16,6 +16,8 @@ will make an anonymous call.
 Pkg.add("Quandl")
 ````
 
+## Getting data
+
 The `quandl` (or `quandlget`) function takes one positional argument and currently supports six keyword arguments, `order`, `rows`, `period`, `transformation`, `auth_key` and `format`. The positional argument is the Quandl code for the database you wish to download. Example:
 
 
@@ -63,6 +65,8 @@ julia> quandl("GOOG/NASDAQ_QQQ", format="DataFrame")
 | 100   | 2014-01-07 | 86.7  | 87.25 | 86.56 | 87.12 | 2.59132e7 |
 
 ```
+
+## Searching data
 
 You can also search using the `quandlsearch` function. Currently, this function supports one positional argument (the string you are searching for), and four keyword arguments, `page` (the page returned by the search), `results` (the number of the results per-page) and `format` (the type of the object returned by the function). This function return an array containing dictionaries, each one representing one search result. Example:
 
