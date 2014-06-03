@@ -24,7 +24,7 @@ function quandlget(id::String; order="des", rows=100, period="daily", transforma
 end
 
 # alias quandl/quandlget
-quandl(args) = quandlget(args) 
+quandl = quandlget
 
 function quandlsearch(query::ASCIIString; page="1", results="20", format="Dict")
  
@@ -39,8 +39,7 @@ function quandlsearch(query::ASCIIString; page="1", results="20", format="Dict")
     jsondict = JSON.parse(response.data)
  
     # Printing summary
-#    print("Returning $results results of $jsondict["total_count"] from page $page")
-    print("Returning $results results from page $page")
+    print("Returning $results results of $(jsondict["total_count"]) from page $page")
  
    # Convert the response to the right DataType
     if format == "Dict"

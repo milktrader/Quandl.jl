@@ -16,9 +16,7 @@ will make an anonymous call.
 Pkg.add("Quandl")
 ````
 
-The `quandl` (or `quandlget`) function takes one positional argument and currently supports four keyword arguments, `order`, `period`, `rows` and `format`. The positional argument is the Quandl code for the database you wish to download. 
-
-DataFrame support is already implemented for this method, being enough to call the function with an argument `fomat=DataFrame`
+The `quandl` (or `quandlget`) function takes one positional argument and currently supports six keyword arguments, `order`, `rows`, `period`, `transformation`, `auth_key` and `format`. The positional argument is the Quandl code for the database you wish to download. Example:
 
 
 ````julia
@@ -36,3 +34,49 @@ julia> quandl("GOOG/NASDAQ_QQQ")
 2014-05-22 | 88.94  89.48  88.8   89.23  3.0617089e7
 2014-05-23 | 89.33  89.9   89.12  89.88  2.2691254e7
 ````
+DataFrame support is already implemented for this method, being enough to call the function with an argument `fomat="DataFrame"`. Example:
+
+```julia
+julia> quandl("GOOG/NASDAQ_QQQ", format="DataFrame")
+100x6 DataFrame
+|-------|------------|-------|-------|-------|-------|-----------|
+| Row # | Date       | Open  | High  | Low   | Close | Volume    |
+| 1     | 2014-05-30 | 91.33 | 91.45 | 90.83 | 91.31 | 2.99169e7 |
+| 2     | 2014-05-29 | 91.05 | 91.31 | 90.86 | 91.3  | 3.30361e7 |
+| 3     | 2014-05-28 | 90.97 | 91.1  | 90.64 | 90.72 | 3.04781e7 |
+| 4     | 2014-05-27 | 90.28 | 91.02 | 90.2  | 91.0  | 2.97252e7 |
+| 5     | 2014-05-23 | 89.33 | 89.9  | 89.12 | 89.88 | 2.26913e7 |
+| 6     | 2014-05-22 | 88.94 | 89.48 | 88.8  | 89.23 | 3.06171e7 |
+| 7     | 2014-05-21 | 88.16 | 88.89 | 88.11 | 88.84 | 3.68377e7 |
+| 8     | 2014-05-20 | 88.28 | 88.6  | 87.64 | 88.0  | 3.3716e7  |
+| 9     | 2014-05-19 | 87.47 | 88.46 | 87.3  | 88.32 | 3.2017e7  |
+⋮
+| 91    | 2014-01-21 | 88.43 | 88.59 | 87.81 | 88.55 | 2.64323e7 |
+| 92    | 2014-01-17 | 88.12 | 88.37 | 87.67 | 87.88 | 3.69082e7 |
+| 93    | 2014-01-16 | 88.28 | 88.51 | 88.16 | 88.38 | 3.42602e7 |
+| 94    | 2014-01-15 | 88.0  | 88.54 | 87.94 | 88.37 | 3.98597e7 |
+| 95    | 2014-01-14 | 86.3  | 87.72 | 86.3  | 87.65 | 3.71941e7 |
+| 96    | 2014-01-13 | 87.18 | 87.48 | 85.68 | 86.01 | 4.88552e7 |
+| 97    | 2014-01-10 | 87.24 | 87.4  | 86.58 | 87.3  | 3.80121e7 |
+| 98    | 2014-01-09 | 87.62 | 87.64 | 86.72 | 87.02 | 2.36957e7 |
+| 99    | 2014-01-08 | 87.11 | 87.55 | 86.94 | 87.31 | 2.721e7   |
+| 100   | 2014-01-07 | 86.7  | 87.25 | 86.56 | 87.12 | 2.59132e7 |
+
+```
+
+You can also search using the `quandlsearch` function. Currently, this function supports one positional argument (the string you are searching for), and four keyword arguments, `page` (the page returned by the search), `results` (the number of the results per-page) and `format` (the type of the object returned by the function). This function return an array containing dictionaries, each one representing one search result. Example:
+
+```julia
+julia> s = quandlsearch("GDP USA"); # Here 's' is an array of dictionaries
+
+julia> s[1] # This first dictionary looks ugly on REPL
+["from_date"=>"1960-12-31","code"=>"USA_NY_GDP_MKTP_CN","name"=>"United States: GDP (current LCU)","source_code"=>"WORLDBANK","id"=>2582933,"updated_at"=>"2014-05-17T12:32:40Z","private"=>false,"description"=>"GDP at purchaser's prices is the sum of gross value added by all resident producers in the economy plus any product taxes and minus any subsidies not included in the value of the products. It is calculated without making deductions for depreciation of fabricated assets or for depletion and degradation of natural resources. Data are in current local currency.\nGDP (current LCU)","urlize_name"=>"United-States-GDP-current-LCU","display_url"=>"http://api.worldbank.org/countries/USA/indicators/NY.GDP.MKTP.CN?per_page=1000","column_names"=>{"Date","Value"},"source_name"=>"World Bank","frequency"=>"annual","type"=>nothing,"to_date"=>"2012-12-31"]
+
+julia> s[1]["name"]
+"United States: GDP (current LCU)"
+
+julia> s[1]["updated_at"]
+"2014-05-17T12:32:40Z"
+```
+
+Better formated search result is on the plans
