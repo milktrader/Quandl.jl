@@ -1,4 +1,4 @@
-using Datetime, TimeSeries, Requests, DataFrames, JSON
+using Datetime, TimeSeries, DataFrames
 
 module Quandl
 
