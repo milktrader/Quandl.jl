@@ -49,6 +49,7 @@ function quandlsearch(query::ASCIIString, page="1", results="20", format="Dict")
     else
         error("Invalid $format format. If you want this format implemented, please report an issue or submit a pull request.")
     end
+end
 
 function set_auth_token(token::String)
 
