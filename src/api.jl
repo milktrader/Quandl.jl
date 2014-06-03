@@ -26,7 +26,7 @@ end
 # alias quandl/quandlget
 quandl(args) = quandlget(args) 
 
-function quandlsearch(query::ASCIIString; page="1", results="20", format="Dict")
+function quandlsearch(query::ASCIIString; page="1", results="20", format="Codes")
  
     # Parsing query argument
     query = replace(query, " ", "+")
@@ -38,13 +38,11 @@ function quandlsearch(query::ASCIIString; page="1", results="20", format="Dict")
     response = get("http://www.quandl.com/api/v1/datasets.json", query = query_args)
     jsondict = JSON.parse(response.data)
  
-    # Printing summary
-#    print("Returning $results results of $jsondict["total_count"] from page $page")
-    print("Returning $results results from page $page")
- 
    # Convert the response to the right DataType
-    if format == "Dict"
-        return jsondict["docs"]
+    if format == "Codes"
+        ASCIIString[j["code"] for j in jsondict["docs"]]
+    elseif format == "Dict"
+        jsondict["docs"]
     elseif format == "DataFrame"
         error("DataFrame format yet to be implemented")
     else
