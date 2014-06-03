@@ -11,12 +11,16 @@ function quandlget(id::String; order="des", rows=100, period="daily", transforma
     length(auth_token) < 50 && auth_token != "" ? query_args["auth_token"] = auth_token : nothing
 
     # Get the response from Quandl's API, using Query arguments (see Response.jl README)
-    response = get("http://www.quandl.com/api/v1/datasets/$id.csv", query = query_args) 
+    response = get("http://www.quandl.com/api/v1/datasets/$id.csv", query = query_args)
+
+    if response.status != 200
+        error("Dataset not found")
+    end
     
     # Convert the response to the right DataType
     if format == "TimeArray"
         timearray(response) 
-    elseif format == "DataFrame" 
+    elseif format == "DataFrame"
         dataframe(response)
     else
         error("Invalid $format format. If you want this format implemented, please report an issue or submit a pull request.")
