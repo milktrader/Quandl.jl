@@ -26,22 +26,23 @@ end
 # alias quandl/quandlget
 quandl(args) = quandlget(args) 
 
-function quandlsearch(query::ASCIIString, page="1", results="20", format="Dict")
-
+function quandlsearch(query::ASCIIString; page="1", results="20", format="Dict")
+ 
     # Parsing query argument
     query = replace(query, " ", "+")
 
     # Create a dictionary with the Query arguments that we pass to get() function
     query_args = {"query" => query, "page" => page, "per_page" => results}
-    
+   
     # Getting response from Quandl and parsing it
     response = get("http://www.quandl.com/api/v1/datasets.json", query = query_args)
     jsondict = JSON.parse(response.data)
-
+ 
     # Printing summary
-    print("Returning $results results of $jsondict["total_count"] from page $page")
-
-    # Convert the response to the right DataType
+#    print("Returning $results results of $jsondict["total_count"] from page $page")
+    print("Returning $results results from page $page")
+ 
+   # Convert the response to the right DataType
     if format == "Dict"
         return jsondict["docs"]
     elseif format == "DataFrame"
@@ -49,6 +50,7 @@ function quandlsearch(query::ASCIIString, page="1", results="20", format="Dict")
     else
         error("Invalid $format format. If you want this format implemented, please report an issue or submit a pull request.")
     end
+end
 
 function set_auth_token(token::String)
 
@@ -56,7 +58,7 @@ function set_auth_token(token::String)
 	token_file = open(Pkg.dir("Quandl/src/token/auth_token.jl"), "w")
 
 	try
-		write(token_file, token * "\n") # Put a newline after the token
+  		write(token_file, token * "\n") # Put a newline after the token
 	finally
 	    close(token_file)
 	end
