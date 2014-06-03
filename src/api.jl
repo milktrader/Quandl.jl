@@ -8,7 +8,7 @@ function quandlget(id::String; order="des", rows=100, period="daily", transforma
         auth_token = open(readall, Pkg.dir("Quandl/src/token/auth_token.jl"))
     end
 
-    length(auth_token) < 50 && auth_token != "" ? query_args["auth_token"] = auth_token : nothing
+    auth_token != "" ? query_args["auth_token"] = auth_token : nothing
 
     # Get the response from Quandl's API, using Query arguments (see Response.jl README)
     response = get("http://www.quandl.com/api/v1/datasets/$id.csv", query = query_args) 
@@ -24,7 +24,7 @@ function quandlget(id::String; order="des", rows=100, period="daily", transforma
 end
 
 # alias quandl/quandlget
-quandl(args) = quandlget(args) 
+quandl = quandlget 
 
 function quandlsearch(query::ASCIIString, page="1", results="20", format="Dict")
 
@@ -39,7 +39,7 @@ function quandlsearch(query::ASCIIString, page="1", results="20", format="Dict")
     jsondict = JSON.parse(response.data)
 
     # Printing summary
-    print("Returning $results results of $jsondict["total_count"] from page $page")
+    print("Returning $results results of $(jsondict["total_count"]) from page $page")
 
     # Convert the response to the right DataType
     if format == "Dict"
@@ -49,6 +49,7 @@ function quandlsearch(query::ASCIIString, page="1", results="20", format="Dict")
     else
         error("Invalid $format format. If you want this format implemented, please report an issue or submit a pull request.")
     end
+end
 
 function set_auth_token(token::String)
 
