@@ -1,4 +1,4 @@
-function quandl(id::String; order="des", rows=100, period="daily", transformation="none", format="TimeArray", auth_token="")
+function quandlget(id::String; order="des", rows=100, period="daily", transformation="none", format="TimeArray", auth_token="")
     
     # Create a dictionary with the Query arguments that we pass to get() function
     query_args = {"sort_order" => order, "rows" => rows, "collapse" => period, "transformation" => transformation}
@@ -18,6 +18,34 @@ function quandl(id::String; order="des", rows=100, period="daily", transformatio
         timearray(response) 
     elseif format == "DataFrame" 
         dataframe(response)
+    else
+        error("Invalid $format format. If you want this format implemented, please report an issue or submit a pull request.")
+    end
+end
+
+# alias quandl/quandlget
+quandl(args) = quandlget(args) 
+
+function quandlsearch(query::ASCIIString, page="1", results="20", format="Dict")
+
+    # Parsing query argument
+    query = replace(query, " ", "+")
+
+    # Create a dictionary with the Query arguments that we pass to get() function
+    query_args = {"query" => query, "page" => page, "per_page" => results}
+    
+    # Getting response from Quandl and parsing it
+    response = get("http://www.quandl.com/api/v1/datasets.json", query = query_args)
+    jsondict = JSON.parse(response.data)
+
+    # Printing summary
+    print("Returning $results results of $jsondict["total_count"] from page $page")
+
+    # Convert the response to the right DataType
+    if format == "Dict"
+        return jsondict["docs"]
+    elseif format == "DataFrame"
+        error("DataFrame format yet to be implemented")
     else
         error("Invalid $format format. If you want this format implemented, please report an issue or submit a pull request.")
     end

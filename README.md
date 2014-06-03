@@ -16,8 +16,9 @@ will make an anonymous call.
 Pkg.add("Quandl")
 ````
 
-The `quandl` method takes one positional argument and currently supports four keyword arguments, `order`, `period`, `rows` and `format`. The positional
-argument is the Quandl code for the database you wish to download. 
+The `quandl` (or `quandlget`) function takes one positional argument and currently supports four keyword arguments, `order`, `period`, `rows` and `format`. The positional argument is the Quandl code for the database you wish to download. 
+
+DataFrame support is already implemented for this method, being enough to call the function with an argument `fomat=DataFrame`
 
 
 ````julia
@@ -35,5 +36,3 @@ julia> quandl("GOOG/NASDAQ_QQQ")
 2014-05-22 | 88.94  89.48  88.8   89.23  3.0617089e7
 2014-05-23 | 89.33  89.9   89.12  89.88  2.2691254e7
 ````
-
-Support for DataFrames is planned. 
