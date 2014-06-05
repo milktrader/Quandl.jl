@@ -46,7 +46,7 @@ function quandlsearch(query::ASCIIString; page="1", results="20", format="Dict")
     totalcount = jsondict["total_count"]
 
     # Printing summary
-    print("Returning $results results of $totalcount from page $page")
+    println("Returning $results results of $totalcount from page $page")
 
     # Convert the response to the right DataType
     if format == "Dict"

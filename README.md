@@ -83,4 +83,49 @@ julia> s[1]["updated_at"]
 "2014-05-17T12:32:40Z"
 ```
 
-Better formated search result is on the plans
+Also, DataFrame support is already implemented for this method, being enough to call the function with an argument `fomat="DataFrame"`. This will return a DataFrame with 5 columns `:Code`, `:Name`, `:Frequency`, `:From`, `:To` and the number of lines specified (default is `results=20`). Example:
+
+```julia
+julia> df = quandlsearch("GDP USA", format="DataFrame", results=30)
+Returning 30 results of 746200 from page 1
+30x5 DataFrame
+|-------|-----------|-------------|---------|
+| Col # | Name      | Eltype      | Missing |
+| 1     | Code      | ASCIIString | 0       |
+| 2     | Name      | ASCIIString | 0       |
+| 3     | Frequency | ASCIIString | 0       |
+| 4     | From      | ASCIIString | 0       |
+| 5     | To        | ASCIIString | 0       |
+
+julia> names(df)
+5-element Array{Symbol,1}:
+ :Code     
+ :Name     
+ :Frequency
+ :From     
+ :To
+
+julia> df[:Name]
+30-element DataArray{ASCIIString,1}:
+ "United States: GDP (current LCU)"                      
+ "United States: GDP growth (annual %)"                  
+ "United States: GDP deflator, LCU"                      
+ "United States: GDP (constant LCU)"                     
+ "France: GDP, current US\$, millions"                   
+ "Netherlands: GDP Potential, constant US\$, millions"   
+ "India: GDP Discrepancy, current US\$, millions"        
+ "Lesotho: GDP Discrepancy, current US\$, millions"      
+ "Vanuatu: GDP (constant 2000 US\$)"                     
+ "Fiji: GDP, current US\$, millions"                     
+ ⋮                                                       
+ "Czech Republic: GDP (current US\$)"                    
+ "Grenada: GDP (current US\$)"                           
+ "Mauritania: GDP (current US\$)"                        
+ "Ethiopia: GDP, current US\$, millions"                 
+ "South Africa: GDP, constant US\$, millions"            
+ "Pakistan: GDP (constant 2000 US\$)"                    
+ "Albania: GDP Discrepancy, constant US\$, millions"     
+ "Nepal: GDP (constant 2000 US\$)"                       
+ "Mongolia: GDP Discrepancy, constant US\$, millions"    
+ "United States: GDP Discrepancy, constant LCU, millions"
+```
