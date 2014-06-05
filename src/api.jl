@@ -61,7 +61,7 @@ function set_auth_token(token::String)
 	token_file = open(Pkg.dir("Quandl/src/token/auth_token.jl"), "w")
 
 	try
-  		write(token_file, token * "\n") # Put a newline after the token
+  		write(token_file, token)
 	finally
 	    close(token_file)
 	end
