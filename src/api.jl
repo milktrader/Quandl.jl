@@ -31,25 +31,41 @@ end
 quandl = quandlget
 
 function quandlsearch(query::ASCIIString; page="1", results="20", format="Dict")
- 
+        
     # Parsing query argument
     query = replace(query, " ", "+")
 
     # Create a dictionary with the Query arguments that we pass to get() function
     query_args = {"query" => query, "page" => page, "per_page" => results}
-   
+          
     # Getting response from Quandl and parsing it
     response = get("http://www.quandl.com/api/v1/datasets.json", query = query_args)
     jsondict = JSON.parse(response.data)
- 
+
+    data = jsondict["docs"]
+    totalcount = jsondict["total_count"]
+
     # Printing summary
-    print("Returning $results results of $(jsondict["total_count"]) from page $page")
- 
-   # Convert the response to the right DataType
+    print("Returning $results results of $totalcount from page $page")
+
+    # Convert the response to the right DataType
     if format == "Dict"
-        return jsondict["docs"]
+        return data
     elseif format == "DataFrame"
-        error("DataFrame format yet to be implemented")
+        # Create an NA 1x5 DataFrame
+        df = convert(DataFrame, ["" "" "" "" ""])
+               
+        # Constructiong the DataFrame
+        for elem in data
+            newline = convert(DataFrame, ["$(elem["source_code"])/$(elem["code"])" "$(elem["name"])" "$(elem["frequency"])" "$(elem["from_date"])" "$(elem["to_date"])"])
+            df = vcat(df,newline)
+        end
+
+        # Naming the columns
+        names!(df, [:Code, :Name, :Frequency, :From, :To])
+
+        # Not returning the NA line
+        return df[2:end,:]
     else
         error("Invalid $format format. If you want this format implemented, please report an issue or submit a pull request.")
     end
