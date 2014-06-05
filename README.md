@@ -3,14 +3,9 @@
 
 ## Julia API to Quandl 
 
-[Quandl.com](http://www.quandl.com) is a lightweight interface to over seven million open-source datasets. 
+[Quandl.com](http://www.quandl.com) is a lightweight interface to over seven million open-source datasets. This package creates an easy interface to obtain and manipulate these datasets, using TimeArrays or DataFrames, as well as letting the user search for data.
 
-You can use this package without an auth token, but it's recommended you get one from Quandl.com. You are limited to 10 downloads per day
-without your unique token. Once you get a token, you'll only need to replace the text in the `src/token/auth_token.jl` file with your unique 
-token. Don't leave any whitespace or extra lines.  Every time you upgrade or re-install this package, you'll need to do this extra step. 
-
-The package will use your unique token automatically, or if you choose to remain anonymous and don't care about more than 10 downloads per day, it
-will make an anonymous call. 
+To install this module, you can run: 
 
 ````julia
 Pkg.add("Quandl")
@@ -42,7 +37,7 @@ DataFrame support is already implemented for this method, being enough to call t
 julia> quandl("GOOG/NASDAQ_QQQ", format="DataFrame")
 100x6 DataFrame
 |-------|------------|-------|-------|-------|-------|-----------|
-| Row # | Date       | Open  | High  | Low   | Close | Volume    |
+| Row   | Date       | Open  | High  | Low   | Close | Volume    |
 | 1     | 2014-05-30 | 91.33 | 91.45 | 90.83 | 91.31 | 2.99169e7 |
 | 2     | 2014-05-29 | 91.05 | 91.31 | 90.86 | 91.3  | 3.30361e7 |
 | 3     | 2014-05-28 | 90.97 | 91.1  | 90.64 | 90.72 | 3.04781e7 |
@@ -84,3 +79,20 @@ julia> s[1]["updated_at"]
 ```
 
 Better formated search result is on the plans
+
+## Setting your API key
+
+You can use this package without an auth token, but it's recommended you get one from Quandl.com, since you are limited to 10 downloads per day
+without it. Once you get a token (creating an account on Quandl is enough), you'll only need to replace the text in the `src/token/auth_token.jl` file with your unique token. Don't leave any whitespace or extra lines. Every time you upgrade or re-install this package, you'll need to do this extra step.
+
+An another way of doing this, is by using the `set_auth_token` function:
+
+
+```julia
+julia> set_auth_token("1234567890") # You pass a string with your API key to this function
+```
+
+The package will use your unique token automatically, or if you choose to remain anonymous and don't care about more than 10 downloads per day, it
+will make an anonymous call.
+
+You can also call `quandl` function using the `auth_token` argument. That way, the program will use it instead of the token stored on the file, if you have one.
