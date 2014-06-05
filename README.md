@@ -78,24 +78,7 @@ julia> s[1]["updated_at"]
 "2014-05-17T12:32:40Z"
 ```
 
-## Setting your API key
-
-You can use this package without an auth token, but it's recommended you get one from Quandl.com, since you are limited to 10 downloads per day
-without it. Once you get a token (creating an account on Quandl is enough), you'll only need to replace the text in the `src/token/auth_token.jl` file with your unique token. Don't leave any whitespace or extra lines. Every time you upgrade or re-install this package, you'll need to do this extra step.
-
-An another way of doing this, is by using the `set_auth_token` function:
-
-
-```julia
-julia> set_auth_token("1234567890") # You pass a string with your API key to this function
-```
-
-The package will use your unique token automatically, or if you choose to remain anonymous and don't care about more than 10 downloads per day, it
-will make an anonymous call.
-
-You can also call `quandl` function using the `auth_token` argument. That way, the program will use it instead of the token stored on the file, if you have one.
-=======
-DataFrame support is implemented for this method, simply call the function with an argument `format="DataFrame"`. This will return a DataFrame with 5 columns `:Code`, `:Name`, `:Frequency`, `:From`, `:To` and the number of lines specified (default is `results=20`). Example:
+DataFrame support is now implemented for this method, simply call the function with an argument `format="DataFrame"`. This will return a DataFrame with 5 columns `:Code`, `:Name`, `:Frequency`, `:From`, `:To` and the number of lines specified (default is `results=20`). Example:
 
 ```julia
 julia> df = quandlsearch("GDP USA", format="DataFrame", results=30)
@@ -141,3 +124,21 @@ julia> df[:Name]
  "Mongolia: GDP Discrepancy, constant US\$, millions"    
  "United States: GDP Discrepancy, constant LCU, millions"
 ```
+
+## Setting your API key
+
+You can use this package without an auth token, but it's recommended you get one from Quandl.com, since you are limited to 10 downloads per day
+without it. Once you get a token (creating an account on Quandl is enough), you'll only need to replace the text in the `src/token/auth_token.jl` file with your unique token. Don't leave any whitespace or extra lines. Every time you upgrade or re-install this package, you'll need to do this extra step.
+
+An another way of doing this, is by using the `set_auth_token` function:
+
+
+```julia
+julia> set_auth_token("1234567890") # You pass a string with your API key to this function
+```
+
+The package will use your unique token automatically, or if you choose to remain anonymous and don't care about more than 10 downloads per day, it
+will make an anonymous call.
+
+You can also call `quandl` function using the `auth_token` argument. That way, the program will use it instead of the token stored on the file, if you have one.
+
