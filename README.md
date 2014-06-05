@@ -78,8 +78,6 @@ julia> s[1]["updated_at"]
 "2014-05-17T12:32:40Z"
 ```
 
-Better formated search result is on the plans
-
 ## Setting your API key
 
 You can use this package without an auth token, but it's recommended you get one from Quandl.com, since you are limited to 10 downloads per day
@@ -96,3 +94,50 @@ The package will use your unique token automatically, or if you choose to remain
 will make an anonymous call.
 
 You can also call `quandl` function using the `auth_token` argument. That way, the program will use it instead of the token stored on the file, if you have one.
+=======
+DataFrame support is implemented for this method, simply call the function with an argument `format="DataFrame"`. This will return a DataFrame with 5 columns `:Code`, `:Name`, `:Frequency`, `:From`, `:To` and the number of lines specified (default is `results=20`). Example:
+
+```julia
+julia> df = quandlsearch("GDP USA", format="DataFrame", results=30)
+Returning 30 results of 746200 from page 1
+30x5 DataFrame
+|-------|-----------|-------------|---------|
+| Col # | Name      | Eltype      | Missing |
+| 1     | Code      | ASCIIString | 0       |
+| 2     | Name      | ASCIIString | 0       |
+| 3     | Frequency | ASCIIString | 0       |
+| 4     | From      | ASCIIString | 0       |
+| 5     | To        | ASCIIString | 0       |
+
+julia> names(df)
+5-element Array{Symbol,1}:
+ :Code     
+ :Name     
+ :Frequency
+ :From     
+ :To
+
+julia> df[:Name]
+30-element DataArray{ASCIIString,1}:
+ "United States: GDP (current LCU)"                      
+ "United States: GDP growth (annual %)"                  
+ "United States: GDP deflator, LCU"                      
+ "United States: GDP (constant LCU)"                     
+ "France: GDP, current US\$, millions"                   
+ "Netherlands: GDP Potential, constant US\$, millions"   
+ "India: GDP Discrepancy, current US\$, millions"        
+ "Lesotho: GDP Discrepancy, current US\$, millions"      
+ "Vanuatu: GDP (constant 2000 US\$)"                     
+ "Fiji: GDP, current US\$, millions"                     
+ ⋮                                                       
+ "Czech Republic: GDP (current US\$)"                    
+ "Grenada: GDP (current US\$)"                           
+ "Mauritania: GDP (current US\$)"                        
+ "Ethiopia: GDP, current US\$, millions"                 
+ "South Africa: GDP, constant US\$, millions"            
+ "Pakistan: GDP (constant 2000 US\$)"                    
+ "Albania: GDP Discrepancy, constant US\$, millions"     
+ "Nepal: GDP (constant 2000 US\$)"                       
+ "Mongolia: GDP Discrepancy, constant US\$, millions"    
+ "United States: GDP Discrepancy, constant LCU, millions"
+```
