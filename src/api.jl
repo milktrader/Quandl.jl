@@ -30,9 +30,9 @@ end
 # alias quandl/quandlget
 quandl = quandlget
 
-function quandlsearch(query::ASCIIString; page="1", results="20", format="Dict")
+function quandlsearch(query::ASCIIString; page="1", results="20", format="DataFrame")
         
-    # Parsing query argument
+    
     query = replace(query, " ", "+")
 
     # Create a dictionary with the Query arguments that we pass to get() function
@@ -49,9 +49,7 @@ function quandlsearch(query::ASCIIString; page="1", results="20", format="Dict")
     println("Returning $results results of $totalcount from page $page")
 
     # Convert the response to the right DataType
-    if format == "Dict"
-        return data
-    elseif format == "DataFrame"
+    if format == "DataFrame"
         # Create an NA 1x5 DataFrame
         df = convert(DataFrame, ["" "" "" "" ""])
                
@@ -66,8 +64,10 @@ function quandlsearch(query::ASCIIString; page="1", results="20", format="Dict")
 
         # Not returning the NA line
         return df[2:end,:]
+    elseif format == "Dict"
+        return data
     else
-        error("Invalid $format format. If you want this format implemented, please report an issue or submit a pull request.")
+        error("Invalid $format format. Currently only DataFrame and Dict are supported. If you want this format implemented, please report an issue or submit a pull request.")
     end
 end
 

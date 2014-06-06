@@ -5,16 +5,13 @@
 
 [Quandl.com](http://www.quandl.com) is a lightweight interface to over seven million open-source datasets. This package creates an easy interface to obtain and manipulate these datasets, using TimeArrays or DataFrames, as well as letting the user search for data.
 
-To install this module, you can run: 
-
 ````julia
 Pkg.add("Quandl")
 ````
 
 ## Getting data
 
-The `quandl` (or `quandlget`) function takes one positional argument and currently supports six keyword arguments, `order`, `rows`, `period`, `transformation`, `auth_key` and `format`. The positional argument is the Quandl code for the database you wish to download. Example:
-
+The `quandl` (or `quandlget`) function takes one positional argument and currently supports six keyword arguments, `order`, `rows`, `period`, `transformation`, `auth_key` and `format`, which defaults to TimeArray. The positional argument is the Quandl code for the database you wish to download.
 
 ````julia
 julia> quandl("GOOG/NASDAQ_QQQ") 
@@ -31,7 +28,8 @@ julia> quandl("GOOG/NASDAQ_QQQ")
 2014-05-22 | 88.94  89.48  88.8   89.23  3.0617089e7
 2014-05-23 | 89.33  89.9   89.12  89.88  2.2691254e7
 ````
-DataFrame support is already implemented for this method, being enough to call the function with an argument `fomat="DataFrame"`. Example:
+
+You can also dowload your data into a DatFrame.
 
 ```julia
 julia> quandl("GOOG/NASDAQ_QQQ", format="DataFrame")
@@ -58,30 +56,14 @@ julia> quandl("GOOG/NASDAQ_QQQ", format="DataFrame")
 | 98    | 2014-01-09 | 87.62 | 87.64 | 86.72 | 87.02 | 2.36957e7 |
 | 99    | 2014-01-08 | 87.11 | 87.55 | 86.94 | 87.31 | 2.721e7   |
 | 100   | 2014-01-07 | 86.7  | 87.25 | 86.56 | 87.12 | 2.59132e7 |
-
 ```
 
 ## Searching data
 
-You can also search using the `quandlsearch` function. Currently, this function supports one positional argument (the string you are searching for), and four keyword arguments, `page` (the page returned by the search), `results` (the number of the results per-page) and `format` (the type of the object returned by the function). This function return an array containing dictionaries, each one representing one search result. Example:
+You can search the quandl database using the `quandlsearch` function. This function supports one positional argument (the string you are searching for), and three keyword arguments:  `page`, which  is the page returned by the search (default is `page=1`), `results`, which is the number of the results per-page (default is  `results=20`), and `format`, which is the datatype where output is aggregated (default is `format=DataFrame`).  
 
 ```julia
-julia> s = quandlsearch("GDP USA"); # Here 's' is an array of dictionaries
-
-julia> s[1] # This first dictionary looks ugly on REPL
-["from_date"=>"1960-12-31","code"=>"USA_NY_GDP_MKTP_CN","name"=>"United States: GDP (current LCU)","source_code"=>"WORLDBANK","id"=>2582933,"updated_at"=>"2014-05-17T12:32:40Z","private"=>false,"description"=>"GDP at purchaser's prices is the sum of gross value added by all resident producers in the economy plus any product taxes and minus any subsidies not included in the value of the products. It is calculated without making deductions for depreciation of fabricated assets or for depletion and degradation of natural resources. Data are in current local currency.\nGDP (current LCU)","urlize_name"=>"United-States-GDP-current-LCU","display_url"=>"http://api.worldbank.org/countries/USA/indicators/NY.GDP.MKTP.CN?per_page=1000","column_names"=>{"Date","Value"},"source_name"=>"World Bank","frequency"=>"annual","type"=>nothing,"to_date"=>"2012-12-31"]
-
-julia> s[1]["name"]
-"United States: GDP (current LCU)"
-
-julia> s[1]["updated_at"]
-"2014-05-17T12:32:40Z"
-```
-
-DataFrame support is now implemented for this method, simply call the function with an argument `format="DataFrame"`. This will return a DataFrame with 5 columns `:Code`, `:Name`, `:Frequency`, `:From`, `:To` and the number of lines specified (default is `results=20`). Example:
-
-```julia
-julia> df = quandlsearch("GDP USA", format="DataFrame", results=30)
+julia> df = quandlsearch("GDP USA", results=30)
 Returning 30 results of 746200 from page 1
 30x5 DataFrame
 |-------|-----------|-------------|---------|
@@ -124,14 +106,26 @@ julia> df[:Name]
  "Mongolia: GDP Discrepancy, constant US\$, millions"    
  "United States: GDP Discrepancy, constant LCU, millions"
 ```
+A dictionary datatype is also supported. 
 
+```julia
+julia> s = quandlsearch("GDP USA", format="Dict"); # Here 's' is an array of dictionaries
+
+julia> s[1] # This first dictionary looks ugly on REPL
+["from_date"=>"1960-12-31","code"=>"USA_NY_GDP_MKTP_CN","name"=>"United States: GDP (current LCU)","source_code"=>"WORLDBANK","id"=>2582933,"updated_at"=>"2014-05-17T12:32:40Z","private"=>false,"description"=>"GDP at purchaser's prices is the sum of gross value added by all resident producers in the economy plus any product taxes and minus any subsidies not included in the value of the products. It is calculated without making deductions for depreciation of fabricated assets or for depletion and degradation of natural resources. Data are in current local currency.\nGDP (current LCU)","urlize_name"=>"United-States-GDP-current-LCU","display_url"=>"http://api.worldbank.org/countries/USA/indicators/NY.GDP.MKTP.CN?per_page=1000","column_names"=>{"Date","Value"},"source_name"=>"World Bank","frequency"=>"annual","type"=>nothing,"to_date"=>"2012-12-31"]
+
+julia> s[1]["name"]
+"United States: GDP (current LCU)"
+
+julia> s[1]["updated_at"]
+"2014-05-17T12:32:40Z"
+```
 ## Setting your API key
 
 You can use this package without an auth token, but it's recommended you get one from Quandl.com, since you are limited to 10 downloads per day
 without it. Once you get a token (creating an account on Quandl is enough), you'll only need to replace the text in the `src/token/auth_token.jl` file with your unique token. Don't leave any whitespace or extra lines. Every time you upgrade or re-install this package, you'll need to do this extra step.
 
 An another way of doing this, is by using the `set_auth_token` function:
-
 
 ```julia
 julia> set_auth_token("1234567890") # You pass a string with your API key to this function
@@ -141,4 +135,3 @@ The package will use your unique token automatically, or if you choose to remain
 will make an anonymous call.
 
 You can also call `quandl` function using the `auth_token` argument. That way, the program will use it instead of the token stored on the file, if you have one.
-
