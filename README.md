@@ -11,7 +11,14 @@ Pkg.add("Quandl")
 
 ## Getting data
 
-The `quandl` (or `quandlget`) function takes one positional argument and currently supports six keyword arguments, `order`, `rows`, `period`, `transformation`, `auth_key` and `format`, which defaults to TimeArray. The positional argument is the Quandl code for the database you wish to download.
+The `quandl` (or `quandlget`) function takes one positional argument (the Quandl code for the database you wish to download) and currently supports six keyword arguments:
+
+- `order`, which is the order in which the returned Dataset is sorted (default is `des`);
+- `rows`, which is the number of rows that the returned Dataset will have (default is `100`);
+- `frequency`, which is the frequency desired for the Dataset (default is `daily`);
+- `transformation`, which is the calculation Quandl do to to Dataset prior to download (default is `none`);
+- `auth_key`, which is user's API key (see the next section for further information);
+- `format`, which is the type returned by the function (default is `"TimeArray"`, but you can use `"DataFrame"` also).
 
 ````julia
 julia> quandl("GOOG/NASDAQ_QQQ") 
@@ -29,7 +36,7 @@ julia> quandl("GOOG/NASDAQ_QQQ")
 2014-05-23 | 89.33  89.9   89.12  89.88  2.2691254e7
 ````
 
-You can also dowload your data into a DatFrame.
+You can also dowload your data into a DataFrame.
 
 ```julia
 julia> quandl("GOOG/NASDAQ_QQQ", format="DataFrame")
@@ -60,7 +67,12 @@ julia> quandl("GOOG/NASDAQ_QQQ", format="DataFrame")
 
 ## Searching data
 
-You can search the quandl database using the `quandlsearch` function. This function supports one positional argument (the string you are searching for), and three keyword arguments:  `page`, which  is the page returned by the search (default is `page=1`), `results`, which is the number of the results per-page (default is  `results=20`), and `format`, which is the datatype where output is aggregated (default is `format=DataFrame`).  
+You can search the quandl database using the `quandlsearch` function. This function supports one positional argument (the string you are searching for), and four keyword arguments:
+
+- `page`, which  is the page returned by the search (default is `1`);
+- `results`, which is the number of the results per-page (default is `20`);
+- `quiet`, which indicates whether the function prints information on screen or not (default is `false`);
+- `format`, which is the datatype where output is aggregated (default is `"DataFrame"`, but you can also use `"Dict"`).
 
 ```julia
 julia> df = quandlsearch("GDP USA", results=30)
@@ -120,6 +132,72 @@ julia> s[1]["name"]
 julia> s[1]["updated_at"]
 "2014-05-17T12:32:40Z"
 ```
+
+## Interactive search
+Our API also provides a interactive search environment to be used inside Julia's REPL. To use it, simply call `interactivequandl` function.
+
+```julia
+julia> a = interactivequandl("USA GDP")
+
+1 WORLDBANK/USA_NY_GDP_MKTP_CN   From 1960-12-31 to 2012-12-31
+    United States: GDP (current LCU)
+2 WORLDBANK/USA_NY_GDP_MKTP_KD_ZG   From 1961-12-31 to 2012-12-31
+    United States: GDP growth (annual %)
+3 WORLDBANK/USA_NYGDPMKTPXN   From 1960-12-31 to 2015-12-31
+    United States: GDP deflator, LCU
+4 WORLDBANK/USA_NY_GDP_MKTP_KN   From 1960-12-31 to 2012-12-31
+    United States: GDP (constant LCU)
+5 WORLDBANK/FRA_NYGDPMKTPCD   From 1960-12-31 to 2015-12-31
+    France: GDP, current US$, millions
+6 WORLDBANK/NLD_NYGDPPOTLKD   From 1961-12-31 to 2015-12-31
+    Netherlands: GDP Potential, constant US$, millions
+7 WORLDBANK/IND_NYGDPDISCCD   From 1960-12-31 to 2015-12-31
+    India: GDP Discrepancy, current US$, millions
+8 WORLDBANK/LSO_NYGDPDISCCD   From 1960-12-31 to 2015-12-31
+    Lesotho: GDP Discrepancy, current US$, millions
+9 WORLDBANK/VUT_NY_GDP_MKTP_KD   From 1979-12-31 to 2012-12-31
+    Vanuatu: GDP (constant 2000 US$)
+10 WORLDBANK/FJI_NYGDPMKTPCD   From 1960-12-31 to 2014-12-31
+    Fiji: GDP, current US$, millions
+11 WORLDBANK/ECU_NYGDPPOTLKD   From 1961-12-31 to 2015-12-31
+    Ecuador: GDP Potential, constant US$, millions
+12 WORLDBANK/LBY_NYGDPMKTPKD   From nothing to nothing
+    Libya: GDP, constant US$, millions
+13 WORLDBANK/ERI_NY_GDP_MKTP_CD   From 1992-12-31 to 2012-12-31
+    Eritrea: GDP (current US$)
+14 WORLDBANK/UZB_NY_GDP_MKTP_CD   From 1990-12-31 to 2012-12-31
+    Uzbekistan: GDP (current US$)
+15 WORLDBANK/CZE_NYGDPMKTPKD   From 1961-12-31 to 2015-12-31
+    Czech Republic: GDP, constant US$, millions
+16 WORLDBANK/SLV_NY_GDP_MKTP_CD   From 1960-12-31 to 2012-12-31
+    El Salvador: GDP (current US$)
+17 WORLDBANK/ARG_NY_GDP_MKTP_CD   From 1962-12-31 to 2012-12-31
+    Argentina: GDP (current US$)
+18 WORLDBANK/USA_NY_GNS_ICTR_ZS   From 1970-12-31 to 2012-12-31
+    United States: Gross savings (% of GDP)
+19 WORLDBANK/SOM_NY_GDP_MKTP_CD   From 1960-12-31 to 1990-12-31
+    Somalia: GDP (current US$)
+20 WORLDBANK/TZA_NY_GDP_MKTP_KD   From 1988-12-31 to 2012-12-31
+    Tanzania: GDP (constant 2000 US$)
+
+==> Enter n° of the dataset to be downloaded | (N)ext page | (Q)uit
+-------------------------------------------------------------------
+==>
+```
+
+On the REPL, however, the environment is printed with colors, so it's easier to read.
+
+This function supports one positional argument (the string you are searching for), and eight keyword arguments:
+
+- `page`, which  is the page returned by the search (default is `page=1`);
+- `results`, which is the number of the results per-page (default is  `results=20`);
+- `order`, which is the order in which the returned Dataset is sorted (default is `des`);
+- `rows`, which is the number of rows that the returned Dataset will have (default is `100`);
+- `frequency`, which is the frequency desired for the Dataset (default is `daily`);
+- `transformation`, which is the calculation Quandl do to to Dataset prior to download (default is `none`);
+- `auth_key`, which is user's API key (see the next section for further information);
+- `format`, which is the type returned by the function (default is `"TimeArray"`, but you can use `"DataFrame"` also)
+
 ## Setting your API key
 
 You can use this package without an auth token, but it's recommended you get one from Quandl.com, since you are limited to 10 downloads per day
@@ -135,3 +213,7 @@ The package will use your unique token automatically, or if you choose to remain
 will make an anonymous call.
 
 You can also call `quandl` function using the `auth_token` argument. That way, the program will use it instead of the token stored on the file, if you have one.
+
+## More
+
+See [Quandl API Help Page](http://www.quandl.com/help/api) for further explanations. The Julia API closely follows the nomenclature used by their documentation.
