@@ -72,7 +72,7 @@ You can search the quandl database using the `quandlsearch` function. This funct
 - `page`, which  is the page returned by the search (default is `1`);
 - `results`, which is the number of the results per-page (default is `20`);
 - `quiet`, which indicates whether the function prints information on screen or not (default is `false`);
-- `format`, which is the datatype where output is aggregated (default is `"DataFrame"`).
+- `format`, which is the datatype where output is aggregated (default is `"DataFrame"`, but you can also use `"Dict"`).
 
 ```julia
 julia> df = quandlsearch("GDP USA", results=30)
@@ -134,7 +134,7 @@ julia> s[1]["updated_at"]
 ```
 
 ## Interactive search
-Our API also provides a interactive search enviornment to be used inside Julia's REPL. To use it, simply call `interactivequandl` function.
+Our API also provides a interactive search environment to be used inside Julia's REPL. To use it, simply call `interactivequandl` function.
 
 ```julia
 julia> a = interactivequandl("USA GDP")
@@ -185,7 +185,7 @@ julia> a = interactivequandl("USA GDP")
 ==>
 ```
 
-On the REPL, however, the enviorment is printed with colors, so it's easier to read.
+On the REPL, however, the environment is printed with colors, so it's easier to read.
 
 This function supports one positional argument (the string you are searching for), and eight keyword arguments:
 
