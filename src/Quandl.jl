@@ -6,7 +6,8 @@ using JSON, Requests, Reexport
 export quandlget, 
        quandl, 
        quandlsearch, 
-       set_auth_token
+       set_auth_token,
+       interactivequandl
 
 include("api.jl")
 include("timearray.jl")
