@@ -16,7 +16,8 @@ function timearray(response::Requests.Response)
     # take the first row (assuming it's date)
     # TODO: regex query needed to catch edge cases
     dates     = [line[1] for line in body]
-    timestamp = Date{ISOCalendar}[date(d) for d in dates] # parse dates
+    #timestamp = Date{ISOCalendar}[date(d) for d in dates] # parse dates
+    timestamp = Date[Date(d) for d in dates] # parse dates
 
     ######### Values 
     vals = [line[2:end] for line in body] # get rows 2 to the end
