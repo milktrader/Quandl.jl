@@ -10,8 +10,9 @@ function dataframe(response::Requests.Response)
         # Use DataFrame's readtable to read the data directly from buffer
         df = readtable(buffer)
         
-        # Convert dates to DateTime object
-        df[:Date] = Date{ISOCalendar}[date(d) for d in df[:Date]]
+        # Convert dates to Dates object
+        df[:Date] = Date[Date(d) for d in df[:Date]]
+
     finally
         close(buffer)   
     end
