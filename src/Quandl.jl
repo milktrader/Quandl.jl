@@ -1,7 +1,7 @@
 module Quandl
 
-using TimeSeries, DataFrames, JSON, Requests, Reexport 
-@reexport using TimeSeries, DataFrames
+using Dates, TimeSeries, DataFrames, JSON, Requests, Reexport 
+@reexport using Dates,TimeSeries, DataFrames
 
 export quandlget, 
        quandl, 
