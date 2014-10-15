@@ -3,7 +3,7 @@
 
 ## Julia API to Quandl 
 
-[Quandl.com](http://www.quandl.com) is a lightweight interface to over seven million open-source datasets. This package creates an easy interface to obtain and manipulate these datasets, using TimeArrays or DataFrames, as well as letting the user search for data.
+[Quandl.com](http://www.quandl.com) is a lightweight interface to over nine million open-source datasets. This package creates an easy interface to obtain and manipulate these datasets, using TimeArrays or DataFrames, as well as letting the user search for data.
 
 ````julia
 Pkg.add("Quandl")
