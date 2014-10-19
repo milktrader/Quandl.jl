@@ -5,7 +5,7 @@ function quandlget(id::String; order="des", rows=100, frequency="daily", transfo
 
     # Open the auth_token file and add the token (if any) to the Query dictionary
     if auth_token == ""
-        auth_token = open(readall, Pkg.dir("Quandl/src/token/auth_token.jl"))
+        auth_token = open(readall, Pkg.dir("Quandl/token/auth_token.jl"))
     end
 
     length(auth_token) < 50 && auth_token != "" ? query_args["auth_token"] = auth_token : nothing
