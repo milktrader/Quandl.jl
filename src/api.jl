@@ -1,5 +1,5 @@
 function quandlget(id::String; order="des", rows=100, frequency="daily", transformation="none", format="TimeArray", auth_token="")
-    
+
     # Create a dictionary with the Query arguments that we pass to get() function
     query_args = {"sort_order" => order, "rows" => rows, "collapse" => frequency, "transformation" => transformation}
 
@@ -16,10 +16,10 @@ function quandlget(id::String; order="des", rows=100, frequency="daily", transfo
     if response.status != 200
         error("Dataset not found")
     end
-    
+
     # Convert the response to the right DataType
     if format == "TimeArray"
-        timearray(response) 
+        timearray(response)
     elseif format == "DataFrame"
         dataframe(response)
     else
@@ -31,12 +31,12 @@ end
 quandl = quandlget
 
 function quandlsearch(query::ASCIIString; page=1, results=20, format="DataFrame", quiet=false)
-           
+
     query = replace(query, " ", "+")
 
     # Create a dictionary with the Query arguments that we pass to get() function
     query_args = {"query" => query, "page" => page, "per_page" => results}
-          
+
     # Getting response from Quandl and parsing it
     response = get("http://www.quandl.com/api/v1/datasets.json", query = query_args)
     jsondict = JSON.parse(response.data)
@@ -53,7 +53,7 @@ function quandlsearch(query::ASCIIString; page=1, results=20, format="DataFrame"
     if format == "DataFrame"
         # Create an NA 1x5 DataFrame
         df = convert(DataFrame, ["" "" "" "" ""])
-               
+
         # Constructiong the DataFrame
         for elem in data
             newline = convert(DataFrame, ["$(elem["source_code"])/$(elem["code"])" "$(elem["name"])" "$(elem["frequency"])" "$(elem["from_date"])" "$(elem["to_date"])"])
@@ -100,7 +100,7 @@ function interactivequandl(query::ASCIIString; page="1", results="20", order="de
     elseif input == "n" || input == "N" # Next page
     	return interactivequandl(query, page = string(int(page) + 1), results = results, format = format, auth_token = auth_token)
     else  # Get and return result
-	    return quandl(searchres[int(input), :Code], 
+	    return quandl(searchres[int(input), :Code],
 	        order = order, rows = rows, frequency = frequency, transformation = transformation, format = format, auth_token = auth_token)
 	end
 end
@@ -108,7 +108,7 @@ end
 function set_auth_token(token::String)
 
 	# TODO: Verify if the token is valid
-	token_file = open(Pkg.dir("Quandl/src/token/auth_token.jl"), "w")
+	token_file = open(Pkg.dir("Quandl/token/auth_token.jl"), "w")
 
 	try
   		write(token_file, token)
