@@ -17,6 +17,8 @@ The `quandl` (or `quandlget`) function takes one positional argument (the Quandl
 - `rows`, which is the number of rows that the returned Dataset will have (default is `100`);
 - `frequency`, which is the frequency desired for the Dataset (default is `daily`);
 - `transformation`, which is the calculation Quandl do to to Dataset prior to download (default is `none`);
+- `start`, which is the starting date for the Dataset (default is `""`);
+- `end`, which is the ending date for the Dataset (default is `""`);
 - `auth_key`, which is user's API key (see the next section for further information);
 - `format`, which is the type returned by the function (default is `"TimeArray"`, but you can use `"DataFrame"` also).
 
