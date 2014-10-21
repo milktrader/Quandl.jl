@@ -1,7 +1,7 @@
-function quandlget(id::String; order="des", rows=100, frequency="daily", transformation="none", start="", end="", format="TimeArray", auth_token="")
+function quandlget(id::String; order="des", rows=100, frequency="daily", transformation="none", from="", to="", format="TimeArray", auth_token="")
 
     # Create a dictionary with the Query arguments that we pass to get() function
-    query_args = {"sort_order" => order, "rows" => rows, "collapse" => frequency, "transformation" => transformation, "trim_start" => start, "trim_end" => end}
+    query_args = {"sort_order" => order, "rows" => rows, "collapse" => frequency, "transformation" => transformation, "trim_from" => from, "trim_to" => to}
 
     # Open the auth_token file and add the token (if any) to the Query dictionary
     if auth_token == ""
@@ -9,7 +9,7 @@ function quandlget(id::String; order="des", rows=100, frequency="daily", transfo
     end
 
     # Do not use rows if start or end date range specified
-    if start != "" || end != ""
+    if from != "" || to != ""
         delete!(query_args, "rows")
     end
 
