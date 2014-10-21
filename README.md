@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/milktrader/Quandl.jl.png)](https://travis-ci.org/milktrader/Quandl.jl)
 [![Quandl](http://pkg.julialang.org/badges/Quandl_release.svg)](http://pkg.julialang.org/?pkg=Quandl&ver=release)
 
-## Julia API to Quandl 
+## Julia API to Quandl
 
 [Quandl.com](http://www.quandl.com) is a lightweight interface to over nine million open-source datasets. This package creates an easy interface to obtain and manipulate these datasets, using TimeArrays or DataFrames, as well as letting the user search for data.
 
@@ -21,7 +21,7 @@ The `quandl` (or `quandlget`) function takes one positional argument (the Quandl
 - `format`, which is the type returned by the function (default is `"TimeArray"`, but you can use `"DataFrame"` also).
 
 ````julia
-julia> quandl("GOOG/NASDAQ_QQQ") 
+julia> quandl("GOOG/NASDAQ_QQQ")
 100x5 TimeArray{Float64,2} 2013-12-31 to 2014-05-23
 
              Open   High   Low    Close  Volume
@@ -88,37 +88,37 @@ Returning 30 results of 746200 from page 1
 
 julia> names(df)
 5-element Array{Symbol,1}:
- :Code     
- :Name     
+ :Code
+ :Name
  :Frequency
- :From     
+ :From
  :To
 
 julia> df[:Name]
 30-element DataArray{ASCIIString,1}:
- "United States: GDP (current LCU)"                      
- "United States: GDP growth (annual %)"                  
- "United States: GDP deflator, LCU"                      
- "United States: GDP (constant LCU)"                     
- "France: GDP, current US\$, millions"                   
- "Netherlands: GDP Potential, constant US\$, millions"   
- "India: GDP Discrepancy, current US\$, millions"        
- "Lesotho: GDP Discrepancy, current US\$, millions"      
- "Vanuatu: GDP (constant 2000 US\$)"                     
- "Fiji: GDP, current US\$, millions"                     
- ⋮                                                       
- "Czech Republic: GDP (current US\$)"                    
- "Grenada: GDP (current US\$)"                           
- "Mauritania: GDP (current US\$)"                        
- "Ethiopia: GDP, current US\$, millions"                 
- "South Africa: GDP, constant US\$, millions"            
- "Pakistan: GDP (constant 2000 US\$)"                    
- "Albania: GDP Discrepancy, constant US\$, millions"     
- "Nepal: GDP (constant 2000 US\$)"                       
- "Mongolia: GDP Discrepancy, constant US\$, millions"    
+ "United States: GDP (current LCU)"
+ "United States: GDP growth (annual %)"
+ "United States: GDP deflator, LCU"
+ "United States: GDP (constant LCU)"
+ "France: GDP, current US\$, millions"
+ "Netherlands: GDP Potential, constant US\$, millions"
+ "India: GDP Discrepancy, current US\$, millions"
+ "Lesotho: GDP Discrepancy, current US\$, millions"
+ "Vanuatu: GDP (constant 2000 US\$)"
+ "Fiji: GDP, current US\$, millions"
+ ⋮
+ "Czech Republic: GDP (current US\$)"
+ "Grenada: GDP (current US\$)"
+ "Mauritania: GDP (current US\$)"
+ "Ethiopia: GDP, current US\$, millions"
+ "South Africa: GDP, constant US\$, millions"
+ "Pakistan: GDP (constant 2000 US\$)"
+ "Albania: GDP Discrepancy, constant US\$, millions"
+ "Nepal: GDP (constant 2000 US\$)"
+ "Mongolia: GDP Discrepancy, constant US\$, millions"
  "United States: GDP Discrepancy, constant LCU, millions"
 ```
-A dictionary datatype is also supported. 
+A dictionary datatype is also supported.
 
 ```julia
 julia> s = quandlsearch("GDP USA", format="Dict"); # Here 's' is an array of dictionaries
@@ -201,18 +201,17 @@ This function supports one positional argument (the string you are searching for
 ## Setting your API key
 
 You can use this package without an auth token, but it's recommended you get one from Quandl.com, since you are limited to 10 downloads per day
-without it. Once you get a token (creating an account on Quandl is enough), you'll only need to replace the text in the `src/token/auth_token.jl` file with your unique token. Don't leave any whitespace or extra lines. Every time you upgrade or re-install this package, you'll need to do this extra step.
+without it. Once you get a token (creating an account on Quandl is enough), you'll only need to replace the text in the `token/auth_token.jl` file with your unique token. Don't leave any whitespace or extra lines. This directory isn't created by default, so you may need to create it by hand, inside `Quandl` package directory. Every time you upgrade or re-install this package, you'll need to do this extra step.
 
-An another way of doing this, is by using the `set_auth_token` function:
+Another way of doing this is by using the `set_auth_token` function:
 
 ```julia
 julia> set_auth_token("1234567890") # You pass a string with your API key to this function
 ```
 
-The package will use your unique token automatically, or if you choose to remain anonymous and don't care about more than 10 downloads per day, it
-will make an anonymous call.
+The package will use your unique token automatically, or if you choose to remain anonymous and don't care about more than 10 downloads per day, it will make an anonymous call.
 
-You can also call `quandl` function using the `auth_token` argument. That way, the program will use it instead of the token stored on the file, if you have one.
+You can also call `quandl` function using the `auth_token` argument. That way, the program will use the token you passed to the function instead of the one stored on the file, if you have one.
 
 ## More
 
