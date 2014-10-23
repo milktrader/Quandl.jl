@@ -8,6 +8,15 @@
 ````julia
 Pkg.add("Quandl")
 ````
+## Quick Start
+
+Before you can download data, you need to generate a file to hold your download token. This can be manually added but preferably done with the `set_auth_token` method.
+
+```julia
+julia> set_auth_token("") # if you choose to use anonymous calls
+
+julia> set_auth_token("myauthtoken") # if you choose to use your unique Quandl.com token
+```
 
 ## Getting data
 
@@ -19,7 +28,6 @@ The `quandl` (or `quandlget`) function takes one positional argument (the Quandl
 - `transformation`, which is the calculation Quandl do to to Dataset prior to download (default is `none`);
 - `from`, which is the starting date for the Dataset (default is `""`);
 - `to`, which is the ending date for the Dataset (default is `""`);
-- `auth_key`, which is user's API key (see the next section for further information);
 - `format`, which is the type returned by the function (default is `"TimeArray"`, but you can use `"DataFrame"` also).
 
 ````julia
@@ -199,21 +207,6 @@ This function supports one positional argument (the string you are searching for
 - `transformation`, which is the calculation Quandl do to to Dataset prior to download (default is `none`);
 - `auth_key`, which is user's API key (see the next section for further information);
 - `format`, which is the type returned by the function (default is `"TimeArray"`, but you can use `"DataFrame"` also)
-
-## Setting your API key
-
-You can use this package without an auth token, but it's recommended you get one from Quandl.com, since you are limited to 10 downloads per day
-without it. Once you get a token (creating an account on Quandl is enough), you'll only need to replace the text in the `token/auth_token.jl` file with your unique token. Don't leave any whitespace or extra lines. This directory isn't created by default, so you may need to create it by hand, inside `Quandl` package directory. Every time you upgrade or re-install this package, you'll need to do this extra step.
-
-Another way of doing this is by using the `set_auth_token` function:
-
-```julia
-julia> set_auth_token("1234567890") # You pass a string with your API key to this function
-```
-
-The package will use your unique token automatically, or if you choose to remain anonymous and don't care about more than 10 downloads per day, it will make an anonymous call.
-
-You can also call `quandl` function using the `auth_token` argument. That way, the program will use the token you passed to the function instead of the one stored on the file, if you have one.
 
 ## More
 
