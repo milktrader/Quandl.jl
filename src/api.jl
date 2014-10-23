@@ -1,19 +1,16 @@
 function quandlget(id::String; order="des", rows=100, frequency="daily", transformation="none", from="", to="", format="TimeArray", auth_token="")
 
     # Create a dictionary with the Query arguments that we pass to get() function
-    query_args = Dict{Any,Any}("sort_order" => order, "rows" => rows, "collapse" => frequency, "transformation" => transformation, "trim_from" => from, "trim_to" => to)
+    query_args = Dict{Any,Any}("sort_order" => order, "rows" => rows, "collapse" => frequency, "transformation" => transformation, "trim_from" => from, "trim_to" => to, auth_token => "")
 
-    # Open the auth_token file and add the token (if any) to the Query dictionary
-    if auth_token == ""
-        auth_token = open(readall, Pkg.dir("Quandl/token/auth_token.jl"))
-    end
+    # Open the auth_token file and add to query_args if it exists
+    auth_token = open(readall, Pkg.dir("Quandl/token/auth_token.jl"))
+    auth_token != "" ? query_args["auth_token"] = auth_token : nothing
 
     # Do not use rows if start or end date range specified
     if from != "" || to != ""
         delete!(query_args, "rows")
     end
-
-    length(auth_token) < 50 && auth_token != "" ? query_args["auth_token"] = auth_token : nothing
 
     # Get the response from Quandl's API, using Query arguments (see Response.jl README)
     response = get("http://www.quandl.com/api/v1/datasets/$id.csv", query = query_args)
