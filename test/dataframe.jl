@@ -1,21 +1,31 @@
+using HDF5, JLD
 include(Pkg.dir("Quandl/src/dataframe.jl"))
-df = dataframe(load(Pkg.dir("Quandl/test/response.jld"))["test_response"])
+
+dfa = dataframe(load(Pkg.dir("Quandl/test/response.jld"))["asc"])
+dfd = dataframe(load(Pkg.dir("Quandl/test/response.jld"))["des"])
 
 facts("dataframe works on Request object") do
 
   context("there are three rows") do
-      @fact  size(df,1) => 3
+      @fact  size(dfa,1) => 3
+      @fact  size(dfd,1) => 3
   end
 
   context("there are six columns") do
-      @fact  size(df,2) => 6
+      @fact  size(dfa,2) => 6
+      @fact  size(dfd,2) => 6
   end
 
-  context("correct value at first row, first column") do
-      @fact  df[1,2] => 103.02
+  context("correct value at first row, first column, depending on ordering") do
+      @fact  dfa[1,2] => 103.02
+      @fact  dfd[1,2] => 104.08
   end
 
-  context("oldest date first") do
-      @fact df[1,1] < df[3,1] => true
+  context("oldest date last when ascending") do
+      @fact dfa[1,1] < dfa[3,1] => true
+  end
+
+  context("oldest date first when descending") do
+      @fact dfd[1,1] > dfd[3,1] => true
   end
 end
