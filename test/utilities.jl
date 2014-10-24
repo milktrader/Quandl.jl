@@ -2,11 +2,15 @@ using HDF5, JLD
 include(Pkg.dir("Quandl/src/timearray.jl"))
 include(Pkg.dir("Quandl/src/utilities.jl"))
 
-ta = timearray(load(Pkg.dir("Quandl/test/response.jld"))["test_response_with_missing"])
+md = timearray(load(Pkg.dir("Quandl/test/response.jld"))["missing"])
 
 facts("ss2float") do
 
-  context("parses as expected") do
-      @fact isempty("") => true
+  context("NaN fills in missing values slot") do
+      @fact  isnan(sum(md.values[:,1])) => true
+  end
+
+  context("existing values remain floats") do
+      @fact  sum(md.values[:,2]) => 66.86
   end
 end

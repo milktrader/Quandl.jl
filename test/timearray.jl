@@ -2,23 +2,23 @@ using HDF5, JLD
 include(Pkg.dir("Quandl/src/timearray.jl"))
 include(Pkg.dir("Quandl/src/utilities.jl"))
 
-ta_d = timearray(load(Pkg.dir("Quandl/test/response.jld"))["des_data"])
-ta_a = timearray(load(Pkg.dir("Quandl/test/response.jld"))["asc_data"])
+taa = timearray(load(Pkg.dir("Quandl/test/response.jld"))["asc"])
+tad = timearray(load(Pkg.dir("Quandl/test/response.jld"))["des"])
 
 facts("timearray works on Request object") do
 
   context("there are three rows") do
-      @fact  length(ta_d) => 3
-      @fact  length(ta_a) => 3
+      @fact  length(taa) => 3
+      @fact  length(tad) => 3
   end
 
   context("oldest date first regardless of ordering argument") do
-      @fact  ta_d[1].timestamp[1] < ta_d[3].timestamp[1] => true
-      @fact  ta_a[1].timestamp[1] < ta_a[3].timestamp[1] => true
+      @fact  taa[1].timestamp[1] < taa[3].timestamp[1] => true
+      @fact  tad[1].timestamp[1] < tad[3].timestamp[1] => true
   end
 
-  context("correct value at first row, first column") do
-      @fact  ta_d[1][1].values[1] => 103.02
-      @fact  ta_a[1][1].values[1] => 103.02
+  context("correct value at first row, first column, regardless of ordering argument") do
+      @fact  taa[1][1].values[1] => 103.02
+      @fact  tad[1][1].values[1] => 103.02
   end
 end
