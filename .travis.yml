@@ -12,7 +12,7 @@ before_install:
     - git config --global user.email "travis@example.net"
 script:
     - julia -e 'versioninfo(); Pkg.init();'
-    - julia -e 'Pkg.add("TimeSeries"); Pkg.add("FactCheck")'
+    - julia -e 'Pkg.add("TimeSeries"); Pkg.add("HDF5"); Pkg.add("FactCheck")'
     - mkdir -p ~/.julia/v0.3/Quandl
     - cp -R ./* ~/.julia/v0.3/Quandl/
     - julia ./test/runtests.jl
