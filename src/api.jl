@@ -1,7 +1,7 @@
 function quandlget(id::String; order="des", rows=100, frequency="daily", transformation="none", from="", to="", format="TimeArray", auth_token="")
 
     # Create a dictionary with the Query arguments that we pass to get() function
-    query_args = {"sort_order" => order, "rows" => rows, "collapse" => frequency, "transformation" => transformation, "trim_from" => from, "trim_to" => to}
+    query_args = {"sort_order" => order, "rows" => rows, "collapse" => frequency, "transformation" => transformation, "trim_start" => from, "trim_end" => to}
     # delete definition above and uncomment below for v0.4
     #query_args = Dict{Any,Any}("sort_order" => order, "rows" => rows, "collapse" => frequency, "transformation" => transformation, "trim_from" => from, "trim_to" => to, auth_token => "")
 
