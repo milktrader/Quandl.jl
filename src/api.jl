@@ -1,7 +1,10 @@
 function quandlget(id::String; order="des", rows=100, frequency="daily", transformation="none", from="", to="", format="TimeArray", auth_token="")
 
     # Create a dictionary with the Query arguments that we pass to get() function
-    query_args = Dict{Any,Any}("sort_order" => order, "rows" => rows, "collapse" => frequency, "transformation" => transformation, "trim_from" => from, "trim_to" => to, auth_token => "")
+    query_args = {"sort_order" => order, "rows" => rows, "collapse" => frequency, "transformation" => transformation, "trim_from" => from, "trim_to" => to}
+    # delete definition above and uncomment below for v0.4
+    #query_args = Dict{Any,Any}("sort_order" => order, "rows" => rows, "collapse" => frequency, "transformation" => transformation, "trim_from" => from, "trim_to" => to, auth_token => "")
+
 
     # Open the auth_token file and add to query_args if it exists
     auth_token = open(readall, Pkg.dir("Quandl/token/auth_token.jl"))
@@ -37,7 +40,9 @@ function quandlsearch(query::ASCIIString; page=1, results=20, format="DataFrame"
     query = replace(query, " ", "+")
 
     # Create a dictionary with the Query arguments that we pass to get() function
-    query_args = Dict{Any,Any}("query" => query, "page" => page, "per_page" => results)
+    query_args = {"query" => query, "page" => page, "per_page" => results}
+    # delete definition above and uncomment below for v0.4
+    #query_args = Dict{Any,Any}("query" => query, "page" => page, "per_page" => results)
 
     # Getting response from Quandl and parsing it
     response = get("http://www.quandl.com/api/v1/datasets.json", query = query_args)
