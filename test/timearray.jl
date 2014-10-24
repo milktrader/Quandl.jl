@@ -1,3 +1,4 @@
+include(Pkg.dir("Quandl/src/timearray.jl"))
 ta = timearray(load(Pkg.dir("Quandl/test/response.jld"))["test_response"])
 
 facts("timearray works on Request object") do

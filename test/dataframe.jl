@@ -1,3 +1,4 @@
+include(Pkg.dir("Quandl/src/dataframe.jl"))
 df = dataframe(load(Pkg.dir("Quandl/test/response.jld"))["test_response"])
 
 facts("dataframe works on Request object") do
