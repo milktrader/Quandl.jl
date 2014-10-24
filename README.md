@@ -210,4 +210,4 @@ This function supports one positional argument (the string you are searching for
 
 ## More
 
-See [Quandl API Help Page](http://www.quandl.com/help/api) for further explanations. The Julia API closely follows the nomenclature used by their documentation.
+See the [Quandl API Help Page](http://www.quandl.com/help/api) for further explanations. The Julia API closely follows the nomenclature used by their documentation.
