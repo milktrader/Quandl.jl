@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/milktrader/Quandl.jl.png)](https://travis-ci.org/milktrader/Quandl.jl)
 [![Quandl](http://pkg.julialang.org/badges/Quandl_release.svg)](http://pkg.julialang.org/?pkg=Quandl&ver=release)
+[![Coverage Status](https://img.shields.io/coveralls/milktrader/Quandl.jl.svg)](https://coveralls.io/r/milktrader/Quandl.jl)
 
 ## Julia API to Quandl
 
