@@ -1,4 +1,5 @@
-using HDF5, JLD
+using TimeSeries, HDF5, JLD, Requests
+
 include(Pkg.dir("Quandl/src/timearray.jl"))
 include(Pkg.dir("Quandl/src/utilities.jl"))
 

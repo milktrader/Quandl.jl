@@ -1,4 +1,5 @@
-using HDF5, JLD
+using Dates, DataFrames, HDF5, JLD, Requests
+
 include(Pkg.dir("Quandl/src/dataframe.jl"))
 
 dfa = dataframe(load(Pkg.dir("Quandl/test/response.jld"))["asc"])
