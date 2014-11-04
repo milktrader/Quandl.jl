@@ -22,7 +22,9 @@ end
 
 # for v0.4
 
-function ss2float(ss::Array{Array{_<:SubString{T<:String},1},1})
+#function ss2float(ss::Array{Array{_<:SubString{T<:String},1},1})
+function ss2float(ss::Array{Array{SubString{String},1},1})
+#function ss2float(ss::Array{Array{SubString{String},1},1})
 
     b = zeros(length(ss),length(ss[1]))
     
