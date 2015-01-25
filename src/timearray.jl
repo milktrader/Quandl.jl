@@ -21,12 +21,25 @@ function timearray(response::Requests.Response)
     timestamp = Date[Date(d) for d in dates] # parse dates
 
     ######### Values 
-    vals = [line[2:end] for line in body] # get rows 2 to the end
-    vals = ss2float(vals) # SubString{ASCIIString}["88.94","89.48","88.8","89.23","30617089.0"]
+    svals = [line[2:end] for line in body] # get rows 2 to the end
+
+    fvals = zeros(length(svals),length(svals[1]))
+    
+    for r in 1:size(fvals,1)
+        for c in 1:size(fvals,2)
+            if ~isempty(svals[r][c])
+                #fvals[r,c] = float(svals[r][c])
+                fvals[r,c] = parsefloat(svals[r][c])
+            else
+                fvals[r,c] = NaN
+            end
+        end
+    end
+    #vals = ss2float(vals) # SubString{ASCIIString}["88.94","89.48","88.8","89.23","30617089.0"]
 
     ######### Column names
     names = split(head, ",")[2:end] # Won't need the Date name (fist column) for TimeArray
     names = ASCIIString[name for name in names]
 
-    return TimeArray(timestamp, vals, names)
+    return TimeArray(timestamp, fvals, names)
 end
