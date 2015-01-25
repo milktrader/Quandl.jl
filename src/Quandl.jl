@@ -20,7 +20,7 @@ export quandlget,
 
 include("api.jl")
 include("timearray.jl")
-include("utilities.jl")
 include("dataframe.jl")
+VERSION < v"0.4-" ? include("utilities03.jl") : include("utilities04.jl")
 
 end
