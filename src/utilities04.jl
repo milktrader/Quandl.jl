@@ -6,7 +6,8 @@
 # 100-element Array{Any,1}:
 # SubString{ASCIIString}["102.54","104.14","101.64","104.03","40887168.0"]
 
-function ss2float(ss::Array{Any,1})
+#function ss2float(ss::Array{Any,1})
+function ss2float(ss)
 
     b = zeros(length(ss),length(ss[1]))
     
