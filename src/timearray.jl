@@ -22,7 +22,6 @@ function timearray(response::Requests.Response)
 
     ######### Values 
     svals = [line[2:end] for line in body] # get rows 2 to the end
-
     fvals = zeros(length(svals),length(svals[1]))
     
     for r in 1:size(fvals,1)
@@ -35,7 +34,6 @@ function timearray(response::Requests.Response)
             end
         end
     end
-    #vals = ss2float(vals) # SubString{ASCIIString}["88.94","89.48","88.8","89.23","30617089.0"]
 
     ######### Column names
     names = split(head, ",")[2:end] # Won't need the Date name (fist column) for TimeArray
