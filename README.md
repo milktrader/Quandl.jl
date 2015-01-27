@@ -11,13 +11,14 @@ Pkg.add("Quandl")
 ````
 ## Quick Start
 
-Before you can download data, you need to generate a file to hold your download token. This can be manually added but preferably done with the `set_auth_token` method.
+Before you download data, you can generate a file to hold your download token. By default, the token file is empty, and you download data anonimously.
 
 ```julia
-julia> set_auth_token("") # if you choose to use anonymous calls
-
 julia> set_auth_token("myauthtoken") # if you choose to use your unique Quandl.com token
+
+julia> set_auth_token("") # if you choose to use anonymous calls (default)
 ```
+The `auth_token` file is stored on Quandl's directory, under the `token` directory.
 
 ## Getting data
 
@@ -212,4 +213,3 @@ This function supports one positional argument (the string you are searching for
 ## More
 
 See the [Quandl API Help Page](http://www.quandl.com/help/api) for further explanations. The Julia API closely follows the nomenclature used by their documentation.
-

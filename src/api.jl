@@ -7,7 +7,7 @@ function quandlget(id::String; order="des", rows=100, frequency="daily", transfo
 
 
     # Open the auth_token file and add to query_args if it exists
-    auth_token = open(readall, Pkg.dir("Quandl/token/auth_token.jl"))
+    auth_token = open(readall, Pkg.dir("Quandl/token/auth_token"))
     auth_token != "" ? query_args["auth_token"] = auth_token : nothing
 
     # Do not use rows if start or end date range specified
@@ -120,7 +120,7 @@ function set_auth_token(token::String)
     if !ispath(Pkg.dir("Quandl/token/"))
         run(`mkdir $(Pkg.dir("Quandl/token/"))`)
     end
-	token_file = open(Pkg.dir("Quandl/token/auth_token.jl"), "w")
+	token_file = open(Pkg.dir("Quandl/token/auth_token"), "w")
 
 	try
   		write(token_file, token)
