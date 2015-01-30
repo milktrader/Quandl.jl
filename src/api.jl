@@ -7,7 +7,7 @@ function quandlget(id::String; order="des", rows=100, frequency="daily", transfo
 
 
     # Open the auth_token file and add to query_args if it exists
-    auth_token = open(readall, Pkg.dir("Quandl/token/auth_token.jl"))
+    auth_token = open(readall, Pkg.dir("Quandl/token/auth_token"))
     auth_token != "" ? query_args["auth_token"] = auth_token : nothing
 
     # Do not use rows if start or end date range specified
@@ -114,19 +114,20 @@ end
 
 function set_auth_token(token::String)
 
-	# TODO: Verify if the token is valid
+    # Check the validity of the token
+	if length(token) != 20 && length(token) != 0
+        error("Invalid Token: must be 20 characters long or be an empty string")
+    end
 
     # Create the token directory if needed
     if !ispath(Pkg.dir("Quandl/token/"))
         run(`mkdir $(Pkg.dir("Quandl/token/"))`)
     end
-	token_file = open(Pkg.dir("Quandl/token/auth_token.jl"), "w")
 
-	try
-  		write(token_file, token)
-	finally
-	    close(token_file)
-	end
+    # Write to the file
+    open(Pkg.dir("Quandl/token/auth_token"), "w") do token_file
+        write(token_file, token)
+    end
 
 	return nothing
 end
