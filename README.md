@@ -11,14 +11,11 @@ Pkg.add("Quandl")
 ````
 ## Quick Start
 
-Before you download data, you can generate a file to hold your download token. By default, the token file is empty, and you download data anonimously.
+You can add your unique Quandl download token if you choose. If you skip this step, your calls will be anonymous. 
 
 ```julia
 julia> set_auth_token("myauthtoken") # if you choose to use your unique Quandl.com token
-
-julia> set_auth_token("") # if you choose to use anonymous calls (default)
 ```
-The `auth_token` file is stored on Quandl's directory, under the `token` directory.
 
 ## Getting data
 
