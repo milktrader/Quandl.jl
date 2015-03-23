@@ -1,9 +1,17 @@
 Getting Started
 ==============
 
-Quandl is a registered package. To add it to your Julia packages, simply do the following in 
-REPL::
+
+::
 
     Pkg.add("Quandl")
 
-The Quandl package is an API to the Quandl.com resource for open source data sets.
+Quick Start
+-----------
+
+You can add your unique Quandl download token if you choose. If you skip
+this step, your calls will be anonymous.
+
+::
+
+    julia> set_auth_token("myauthtoken") # if you choose to use your unique Quandl.com token
