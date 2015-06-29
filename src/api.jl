@@ -16,7 +16,7 @@ function quandlget(id::String; order="des", rows=100, frequency="daily", transfo
     end
 
     # Get the response from Quandl's API, using Query arguments (see Response.jl README)
-    response = get("http://www.quandl.com/api/v1/datasets/$id.csv", query = query_args)
+    response = get("https://www.quandl.com/api/v1/datasets/$id.csv", query = query_args)
 
     if response.status != 200
         error("Dataset not found")
@@ -45,7 +45,7 @@ function quandlsearch(query::ASCIIString; page=1, results=20, format="DataFrame"
     #query_args = Dict{Any,Any}("query" => query, "page" => page, "per_page" => results)
 
     # Getting response from Quandl and parsing it
-    response = get("http://www.quandl.com/api/v1/datasets.json", query = query_args)
+    response = get("https://www.quandl.com/api/v1/datasets.json", query = query_args)
     jsondict = JSON.parse(response.data)
 
     data = jsondict["docs"]
