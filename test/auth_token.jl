@@ -1,4 +1,4 @@
-facts("Auth token generation is successfull")  do
+facts("Auth token generation is successful")  do
     include(Pkg.dir("Quandl/src/Quandl.jl"))
 
     context("created an empty token file after importing module") do
