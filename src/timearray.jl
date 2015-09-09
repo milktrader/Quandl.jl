@@ -3,7 +3,8 @@ function timearray(response::Requests.Response)
     #This function transform the Response object into a TimeArray
 
     # Split the data on every "\n"
-    data = split(response.data, "\n")
+#    data = split(response.data, "\n")
+    data = split(Requests.text(response), "\n")
 
     # Extract the head and body of the data
     head = data[1]  
