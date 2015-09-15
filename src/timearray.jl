@@ -3,7 +3,6 @@ function timearray(response::Requests.Response)
     #This function transform the Response object into a TimeArray
 
     # Split the data on every "\n"
-#    data = split(response.data, "\n")
     data = split(Requests.text(response), "\n")
 
     # Extract the head and body of the data
@@ -18,7 +17,6 @@ function timearray(response::Requests.Response)
     # take the first row (assuming it's date)
     # TODO: regex query needed to catch edge cases
     dates     = [line[1] for line in body]
-    #timestamp = Date{ISOCalendar}[date(d) for d in dates] # parse dates
     timestamp = Date[Date(d) for d in dates] # parse dates
 
     ######### Values 
@@ -28,7 +26,6 @@ function timearray(response::Requests.Response)
     for r in 1:size(fvals,1)
         for c in 1:size(fvals,2)
             if ~isempty(svals[r][c])
-                #fvals[r,c] = float(svals[r][c])
                 fvals[r,c] = parsefloat(svals[r][c])
             else
                 fvals[r,c] = NaN

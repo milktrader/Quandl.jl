@@ -1,23 +1,14 @@
-if VERSION < v"0.4-"
-   using Dates, TimeSeries, DataFrames
-else
-   using Base.Dates, TimeSeries, DataFrames
-end
+using Dates, TimeSeries, DataFrames
 
 module Quandl
 
-if VERSION < v"0.4-"
-   using Dates, TimeSeries, DataFrames, JSON, Requests
-else
-   using Base.Dates, TimeSeries, DataFrames, JSON, Requests
-end
+using Dates, TimeSeries, DataFrames, Requests
 
 export quandlget,
        quandl,
        quandlsearch,
        set_auth_token,
        interactivequandl
-
 
 include("api.jl")
 include("timearray.jl")

@@ -5,7 +5,6 @@ function dataframe(response::Requests.Response)
 
     try
         # Write the data to the buffer
-        #write(buffer, response.data) <- old Requests semantics
         write(buffer, Requests.text(response))
 
         # Use DataFrame's readtable to read the data directly from buffer

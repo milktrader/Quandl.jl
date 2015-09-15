@@ -28,7 +28,7 @@ function quandlget(id::String; order="des", rows=100, frequency="daily", transfo
     elseif format == "DataFrame"
         dataframe(response)
     else
-        error("Invalid $format format. If you want this format implemented, please report an issue or submit a pull request.")
+        error("Invalid $format format. If you want this format implemented, please file an issue or submit a pull request.")
     end
 end
 
@@ -41,11 +41,11 @@ function quandlsearch(query::ASCIIString; page=1, results=20, format="DataFrame"
 
     # Create a dictionary with the Query arguments that we pass to get() function
     query_args = {"query" => query, "page" => page, "per_page" => results}
-    # delete definition above and uncomment below for v0.4
-    #query_args = Dict{Any,Any}("query" => query, "page" => page, "per_page" => results)
 
     # Getting response from Quandl and parsing it
     response = get("https://www.quandl.com/api/v1/datasets.json", query = query_args)
+
+    # TODO fix the call to responose.data
     jsondict = JSON.parse(response.data)
 
     data = jsondict["docs"]
@@ -75,7 +75,7 @@ function quandlsearch(query::ASCIIString; page=1, results=20, format="DataFrame"
     elseif format == "Dict"
         return data
     else
-        error("Invalid $format format. Currently only DataFrame and Dict are supported. If you want this format implemented, please report an issue or submit a pull request.")
+        error("Invalid $format format. Currently only DataFrame and Dict are supported. If you want this format implemented, please file an issue or submit a pull request.")
     end
 end
 
