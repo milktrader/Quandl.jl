@@ -1,3 +1,7 @@
+### 0.4.4
+
+* last planned version with support for Julia 0.3
+
 ### 0.4.3
 
 * adapted to semantic changes in the Requests package
