@@ -1,8 +1,8 @@
-using Dates, TimeSeries, DataFrames
+using Base.Dates, TimeSeries, DataFrames
 
 module Quandl
 
-using Dates, TimeSeries, DataFrames, Requests
+using Base.Dates, TimeSeries, DataFrames, Requests
 
 export quandlget,
        quandl,

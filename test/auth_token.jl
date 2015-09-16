@@ -3,11 +3,11 @@ facts("Auth token generation is successful")  do
 
     context("created an empty token file after importing module") do
         context("created token file") do
-            @fact isfile(Pkg.dir("Quandl/token/auth_token")) => true
+            @fact isfile(Pkg.dir("Quandl/token/auth_token")) --> true
         end
 
         context("token file is empty") do
-            @fact open(readall, Pkg.dir("Quandl/token/auth_token")) => ""
+            @fact open(readall, Pkg.dir("Quandl/token/auth_token")) --> ""
         end
     end
 

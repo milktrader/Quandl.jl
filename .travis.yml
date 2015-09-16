@@ -2,10 +2,10 @@ language: julia
 os:
   - linux
 julia:
-  - 0.3
+  - 0.4
 notifications:
   email: false
 sudo: false
 script:
   - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
-  - julia -e 'Pkg.clone(pwd()); Pkg.build("Quandl"); Pkg.test("TimeSeries")'
+  - julia -e 'Pkg.clone(pwd()); Pkg.build("Quandl"); Pkg.test("Quandl")'
