@@ -17,17 +17,17 @@ function quandlget(id::String; order="des", rows=100, frequency="daily", transfo
     end
 
     # Get the response from Quandl's API, using Query arguments (see Response.jl README)
-    response = get("https://www.quandl.com/api/v1/datasets/$id.csv", query = query_args)
+    resp = get("https://www.quandl.com/api/v1/datasets/$id.csv", query = query_args)
 
-    if response.status != 200
+    if resp.status != 200
         error("Dataset not found")
     end
 
     # Convert the response to the right DataType
     if format == "TimeArray"
-        timearray(response)
+        timearray(resp)
     elseif format == "DataFrame"
-        dataframe(response)
+        dataframe(resp)
     else
         error("Invalid $format format. If you want this format implemented, please file an issue or submit a pull request.")
     end
@@ -44,11 +44,9 @@ function quandlsearch(query::ASCIIString; page=1, results=20, format="DataFrame"
     query_args = Dict{Any,Any}("query" => query, "page" => page, "per_page" => results)
 
     # Getting response from Quandl and parsing it
-    response = get("https://www.quandl.com/api/v1/datasets.json", query = query_args)
-
-    jsondict = Requests.json(response)
-
-    data = jsondict["docs"]
+    resp       = get("https://www.quandl.com/api/v1/datasets.json", query = query_args)
+    jsondict   = Requests.json(resp)
+    data       = jsondict["docs"]
     totalcount = jsondict["total_count"]
 
     # Printing summary
