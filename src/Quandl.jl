@@ -1,8 +1,10 @@
-using Dates, TimeSeries, DataFrames
+VERSION >= v"0.4.0-dev+6521" && __precompile__(true)
+
+using Base.Dates, TimeSeries, DataFrames
 
 module Quandl
 
-using Dates, TimeSeries, DataFrames, Requests
+using Base.Dates, TimeSeries, DataFrames, Requests
 
 export quandlget,
        quandl,

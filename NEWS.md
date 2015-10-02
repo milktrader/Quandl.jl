@@ -1,7 +1,7 @@
 ### 0.5.0
 
-* first version to support only Julia 0.4
-
+* first version with support for Julia 0.4 only
+* precompilation support added
 
 ### 0.4.4
 

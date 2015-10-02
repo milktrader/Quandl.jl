@@ -1,9 +1,9 @@
-function timearray(response::Requests.Response)
+function timearray(resp::Requests.Response)
 
     #This function transform the Response object into a TimeArray
 
     # Split the data on every "\n"
-    data = split(Requests.text(response), "\n")
+    data = split(Requests.text(resp), "\n")
 
     # Extract the head and body of the data
     head = data[1]  
@@ -26,7 +26,7 @@ function timearray(response::Requests.Response)
     for r in 1:size(fvals,1)
         for c in 1:size(fvals,2)
             if ~isempty(svals[r][c])
-                fvals[r,c] = parsefloat(svals[r][c])
+                fvals[r,c] = parse(Float64, svals[r][c])
             else
                 fvals[r,c] = NaN
             end
