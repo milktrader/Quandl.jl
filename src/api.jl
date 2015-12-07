@@ -1,4 +1,4 @@
-function quandlget(id::String; order="des", rows=100, frequency="daily", transformation="none", 
+function quandlget(id::AbstractString; order="des", rows=100, frequency="daily", transformation="none", 
                    from="", to="", format="TimeArray", auth_token="")
 
     # Create a dictionary with the Query arguments that we pass to get() function
@@ -36,7 +36,7 @@ end
 # alias quandl/quandlget
 quandl = quandlget
 
-function quandlsearch(query::ASCIIString; page=1, results=20, format="DataFrame", quiet=false)
+function quandlsearch(query::AbstractString; page=1, results=20, format="DataFrame", quiet=false)
 
     query = replace(query, " ", "+")
 
@@ -79,7 +79,7 @@ function quandlsearch(query::ASCIIString; page=1, results=20, format="DataFrame"
     end
 end
 
-function interactivequandl(query::ASCIIString; page="1", results="20", order="des", 
+function interactivequandl(query::AbstractString; page="1", results="20", order="des", 
                            rows=100, frequency="daily", transformation="none", format="TimeArray", 
                            auth_token="")
 
@@ -117,7 +117,7 @@ function interactivequandl(query::ASCIIString; page="1", results="20", order="de
     end
 end
 
-function set_auth_token(token::String)
+function set_auth_token(token::AbstractString)
 
     # Check the validity of the token
     if length(token) != 20 && length(token) != 0
