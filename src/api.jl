@@ -56,9 +56,7 @@ function quandlsearch(query::AbstractString; page=1, results=20, format="DataFra
 
         # Constructiong the DataFrame
         for elem in data
-            newline = convert(DataFrame, ["$(elem["source_code"])/$(elem["code"])"
-                                          "$(elem["name"])" "$(elem["frequency"])"
-                                          "$(elem["from_date"])" "$(elem["to_date"])"])
+            newline = convert(DataFrame, ["$(elem["source_code"])/$(elem["code"])" "$(elem["name"])" "$(elem["frequency"])" "$(elem["from_date"])" "$(elem["to_date"])"])
             df = vcat(df,newline)
         end
 
