@@ -1,15 +1,10 @@
-function quandlget(id::AbstractString; order="des", rows=100, frequency="daily", transformation="none", 
-                   from="", to="", format="TimeArray", auth_token="")
+function quandlget(id::AbstractString; order="des", rows=100, frequency="daily", transformation="none",
+                   from="", to="", format="TimeArray", api_key="")
 
     # Create a dictionary with the Query arguments that we pass to get() function
-    query_args = Dict{Any,Any}("sort_order" => order, "rows" => rows, "collapse" => frequency, 
-                               "transformation" => transformation, "trim_from" => from, "trim_to" => to, 
-                               auth_token => "")
-
-
-    # Open the auth_token file and add to query_args if it exists
-    auth_token = open(readall, Pkg.dir("Quandl/token/auth_token"))
-    auth_token != "" ? query_args["auth_token"] = auth_token : nothing
+    query_args = Dict{Any,Any}("order" => order, "rows" => rows, "collapse" => frequency,
+                               "transformation" => transformation, "start_date" => from, "end_date" => to,
+                               "api_key" => api_key)
 
     # Do not use rows if start or end date range specified
     if from != "" || to != ""
@@ -17,10 +12,10 @@ function quandlget(id::AbstractString; order="des", rows=100, frequency="daily",
     end
 
     # Get the response from Quandl's API, using Query arguments (see Response.jl README)
-    resp = get("https://www.quandl.com/api/v1/datasets/$id.csv", query = query_args)
+    resp = get("https://www.quandl.com/api/v3/datasets/$id.csv", query = query_args)
 
     if resp.status != 200
-        error("Dataset not found")
+        error("$resp.status: Error executing the request.")
     end
 
     # Convert the response to the right DataType
@@ -61,8 +56,8 @@ function quandlsearch(query::AbstractString; page=1, results=20, format="DataFra
 
         # Constructiong the DataFrame
         for elem in data
-            newline = convert(DataFrame, ["$(elem["source_code"])/$(elem["code"])" 
-                                          "$(elem["name"])" "$(elem["frequency"])" 
+            newline = convert(DataFrame, ["$(elem["source_code"])/$(elem["code"])"
+                                          "$(elem["name"])" "$(elem["frequency"])"
                                           "$(elem["from_date"])" "$(elem["to_date"])"])
             df = vcat(df,newline)
         end
@@ -79,8 +74,8 @@ function quandlsearch(query::AbstractString; page=1, results=20, format="DataFra
     end
 end
 
-function interactivequandl(query::AbstractString; page="1", results="20", order="des", 
-                           rows=100, frequency="daily", transformation="none", format="TimeArray", 
+function interactivequandl(query::AbstractString; page="1", results="20", order="des",
+                           rows=100, frequency="daily", transformation="none", format="TimeArray",
                            auth_token="")
 
 	# Get search results
@@ -107,12 +102,12 @@ function interactivequandl(query::AbstractString; page="1", results="20", order=
     if input == "q" || input == "Q" || input == "" # Quit
        	return nothing
     elseif input == "n" || input == "N" # Next page
-    	  return interactivequandl(query, page = string(int(page) + 1), results = results, 
+    	  return interactivequandl(query, page = string(int(page) + 1), results = results,
                                  format = format, auth_token = auth_token)
     else  # Get and return result
 	      return quandl(searchres[int(input), :Code],
-	                     order = order, rows = rows, frequency = frequency, 
-                       transformation = transformation, format = format, 
+	                     order = order, rows = rows, frequency = frequency,
+                       transformation = transformation, format = format,
                        auth_token = auth_token)
     end
 end
@@ -126,7 +121,7 @@ function set_auth_token(token::AbstractString)
 
     # Create the token directory if needed
     if !ispath(Pkg.dir("Quandl/token/"))
-        run(`mkdir $(Pkg.dir("Quandl/token/"))`)
+        mkdir(Pkg.dir("Quandl/token/"))
     end
 
     # Write to the file
