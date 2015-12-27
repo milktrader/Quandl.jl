@@ -2,13 +2,17 @@ function quandlget(id::AbstractString; order="des", rows=100, frequency="daily",
                    from="", to="", format="TimeArray", api_key="")
 
     # Create a dictionary with the Query arguments that we pass to get() function
-    query_args = Dict{Any,Any}("order" => order, "rows" => rows, "collapse" => frequency,
-                               "transformation" => transformation, "start_date" => from, "end_date" => to,
-                               "api_key" => api_key)
+    query_args = Dict{Any,Any}("order" => order, "rows" => rows, "collapse" => frequency, "transform" => transformation)
 
-    # Do not use rows if start or end date range specified
-    if from != "" || to != ""
+    # Ignore rows argument if start or end date range specified
+    if from != ""
         delete!(query_args, "rows")
+        query_args["start_date"] = from
+    end
+    
+    if to != ""
+        delete!(query_args, "rows")
+        query_args["end_date"] = to
     end
 
     # Get the response from Quandl's API, using Query arguments (see Response.jl README)
