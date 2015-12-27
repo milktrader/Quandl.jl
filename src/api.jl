@@ -15,7 +15,7 @@ function quandlget(id::AbstractString; order="des", rows=100, frequency="daily",
     resp = get("https://www.quandl.com/api/v3/datasets/$id.csv", query = query_args)
 
     if resp.status != 200
-        error("$resp.status: Error executing the request.")
+        error("$(resp.status): Error executing the request.")
     end
 
     # Convert the response to the right DataType
