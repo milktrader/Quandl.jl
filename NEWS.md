@@ -1,3 +1,8 @@
+### 0.5.2
+
+* support for quandl.com API v3 added
+* fix to empty query bug
+
 ### 0.5.1
 
 * change String and ASCIIString typed parameters to AbstractString
