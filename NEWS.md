@@ -1,6 +1,10 @@
+### 0.5.3
+
+* bug fix for empty query arguments (thanks @prcastro)
+
 ### 0.5.2
 
-* support for quandl.com API v3 added
+* support for quandl.com API v3 added (thanks @ViralBShah)
 * fix to empty query bug
 
 ### 0.5.1
