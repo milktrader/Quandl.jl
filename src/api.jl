@@ -2,7 +2,7 @@ function quandlget(id::AbstractString; order="des", rows=100, frequency="daily",
                    from="", to="", format="TimeArray", api_key="")
 
     # Create a dictionary with the Query arguments that we pass to get() function
-    query_args = Dict{Any,Any}("order" => order, "rows" => rows, "collapse" => frequency, "transform" => transformation)
+    query_args = Dict{Any,Any}("order" => order, "rows" => rows, "collapse" => frequency, "transform" => transformation, "api_key" => api_key)
 
     # Ignore rows argument if start or end date range specified
     if from != ""
