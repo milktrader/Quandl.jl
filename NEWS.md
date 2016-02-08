@@ -1,3 +1,7 @@
+### 0.5.4
+
+* add api_key to query args (thanks @bspeice)
+
 ### 0.5.3
 
 * bug fix for empty query arguments (thanks @prcastro)
