@@ -1,6 +1,20 @@
 function quandlget(id::AbstractString; order="des", rows=100, frequency="daily", transformation="none",
                    from="", to="", format="TimeArray", api_key="")
 
+    # verify and use API key
+    if api_key==""
+        if !ispath(Pkg.dir("Quandl/token/"))
+            println("Note: for unlimited access, you may need to get an API key at quandl.com")
+        else
+            api_key=readall(Pkg.dir("Quandl/token/auth_token"))
+            if api_key==""
+                println("Note: for unlimited access, you may need to get an API key at quandl.com")
+            else
+                println("Using API key: ", api_key)
+            end
+        end
+    end
+    
     # Create a dictionary with the Query arguments that we pass to get() function
     query_args = Dict{Any,Any}("order" => order, "rows" => rows, "collapse" => frequency, "transform" => transformation, "api_key" => api_key)
 
