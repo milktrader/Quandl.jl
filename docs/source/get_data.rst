@@ -18,6 +18,7 @@ supports six keyword arguments:
 -  ``to``, which is the ending date for the Dataset (default is ``""``);
 -  ``format``, which is the type returned by the function (default is
    ``"TimeArray"``, but you can use ``"DataFrame"`` also).
+-  ``api_key``, which can be used to set your own API key from quandl.com
 
 ::
 
