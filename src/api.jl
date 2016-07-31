@@ -3,10 +3,10 @@ function quandlget(id::AbstractString; order="des", rows=100, frequency="daily",
 
     # verify and use API key
     if api_key==""
-        if !ispath(Pkg.dir("Quandl/token/"))
+        if !ispath(joinpath(dirname(@__FILE__),"../token/"))
             println("Note: for unlimited access, you may need to get an API key at quandl.com")
         else
-            api_key=readall(Pkg.dir("Quandl/token/auth_token"))
+            api_key=readall(joinpath(dirname(@__FILE__),"../token/auth_token"))
             if api_key==""
                 println("Note: for unlimited access, you may need to get an API key at quandl.com")
             else
@@ -136,12 +136,12 @@ function set_auth_token(token::AbstractString)
     end
 
     # Create the token directory if needed
-    if !ispath(Pkg.dir("Quandl/token/"))
-        mkdir(Pkg.dir("Quandl/token/"))
+    if !ispath(joinpath(dirname(@__FILE__),"../token/"))
+        mkdir(joinpath(dirname(@__FILE__),"../token/"))
     end
 
     # Write to the file
-    open(Pkg.dir("Quandl/token/auth_token"), "w") do token_file
+    open(joinpath(dirname(@__FILE__),"../token/auth_token"), "w") do token_file
         write(token_file, token)
     end
 

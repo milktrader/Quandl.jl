@@ -1,8 +1,8 @@
 using JLD, TimeSeries
 
-include(Pkg.dir("Quandl/src/timearray.jl"))
+include(joinpath(dirname(@__FILE__),"../src/timearray.jl"))
 
-r  = load(Pkg.dir("Quandl/test/resp.jld"), "resp")
+r  = load(joinpath(dirname(@__FILE__),"resp.jld"), "resp")
 ta = timearray(r)["Close"]
 
 facts("timearray works on Request object") do

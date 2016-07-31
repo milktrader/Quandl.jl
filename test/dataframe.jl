@@ -1,8 +1,8 @@
 using JLD, DataFrames 
  
-include(Pkg.dir("Quandl/src/dataframe.jl"))
+include(joinpath(dirname(@__FILE__),"../src/dataframe.jl"))
  
-r  = load(Pkg.dir("Quandl/test/resp.jld"), "resp")
+r  = load(joinpath(dirname(@__FILE__),"resp.jld"), "resp")
 df = dataframe(r)
 
 facts("dataframe works on Request object") do

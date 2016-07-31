@@ -17,7 +17,7 @@ include("timearray.jl")
 include("dataframe.jl")
 
 # Create empty auth token if none exists
-if !isfile(Pkg.dir("Quandl/token/auth_token"))
+if !isfile(joinpath(dirname(@__FILE__),"../token/auth_token"))
     set_auth_token("")
 end
 
