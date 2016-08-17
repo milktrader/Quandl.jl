@@ -14,7 +14,7 @@ function quandlget(id::AbstractString; order="des", rows=100, frequency="daily",
             end
         end
     end
-    
+
     # Create a dictionary with the Query arguments that we pass to get() function
     query_args = Dict{Any,Any}("order" => order, "rows" => rows, "collapse" => frequency, "transform" => transformation, "api_key" => api_key)
 
@@ -23,7 +23,7 @@ function quandlget(id::AbstractString; order="des", rows=100, frequency="daily",
         delete!(query_args, "rows")
         query_args["start_date"] = from
     end
-    
+
     if to != ""
         delete!(query_args, "rows")
         query_args["end_date"] = to
@@ -32,17 +32,21 @@ function quandlget(id::AbstractString; order="des", rows=100, frequency="daily",
     # Get the response from Quandl's API, using Query arguments (see Response.jl README)
     resp = get("https://www.quandl.com/api/v3/datasets/$id.csv", query = query_args)
 
+    # return Union{} in case of fetch error
     if resp.status != 200
-        error("$(resp.status): Error executing the request.")
-    end
-
-    # Convert the response to the right DataType
-    if format == "TimeArray"
-        timearray(resp)
-    elseif format == "DataFrame"
-        dataframe(resp)
+        println(" $(resp.status): Error executing the request.")
+        Union{}
     else
-        error("Invalid $format format. If you want this format implemented, please file an issue or submit a pull request.")
+        # Convert the response to the right DataType
+        if format == "TimeArray"
+            timearray(resp)
+        elseif format == "DataFrame"
+            dataframe(resp)
+        else
+            # return the raw fetch if requested format is not supported
+            println("Currently only TimeArray and DataFrame formats are supported")
+            resp
+        end
     end
 end
 
@@ -95,7 +99,7 @@ function interactivequandl(query::AbstractString; page="1", results="20", order=
                            auth_token="")
 
 	# Get search results
-    searchres = quandlsearch(query, page = page, results = results, format="DataFrame", quiet=true)
+    searches = quandlsearch(query, page = page, results = results, format="DataFrame", quiet=true)
 
     # Print results
     for i in 1:size(searchres, 1)
