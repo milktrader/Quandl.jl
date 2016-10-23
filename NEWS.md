@@ -1,3 +1,7 @@
+### 0.6.0
+
+* support floor of julia 0.5.0
+
 ### 0.5.4
 
 * add api_key to query args (thanks @bspeice)
