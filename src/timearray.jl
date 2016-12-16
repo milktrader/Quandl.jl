@@ -35,7 +35,7 @@ function timearray(resp::Requests.Response)
 
     ######### Column names
     names = split(head, ",")[2:end] # Won't need the Date name (fist column) for TimeArray
-    names = ASCIIString[name for name in names]
+    names = String[name for name in names]
 
     return TimeArray(timestamp, fvals, names)
 end

@@ -1,6 +1,8 @@
 ### 0.6.1
 
-* fixes typo in interactivequandl method
+* fixes typo and incorrect parameter name in interactivequandl method
+* changes ASCIIString to String in timearray.jl
+* remove readall in favor of readstring in api.jl
 
 ### 0.6.0
 

@@ -6,7 +6,7 @@ function quandlget(id::AbstractString; order="des", rows=100, frequency="daily",
         if !ispath(joinpath(dirname(@__FILE__),"../token/"))
             println("Note: for unlimited access, you may need to get an API key at quandl.com")
         else
-            api_key=readall(joinpath(dirname(@__FILE__),"../token/auth_token"))
+            api_key=readstring(joinpath(dirname(@__FILE__),"../token/auth_token"))
             if api_key==""
                 println("Note: for unlimited access, you may need to get an API key at quandl.com")
             else
@@ -94,7 +94,7 @@ function quandlsearch(query::AbstractString; page=1, results=20, format="DataFra
     end
 end
 
-function interactivequandl(query::AbstractString; page="1", results="20", order="des",
+function interactivequandl(query::AbstractString; page="1", results=20, order="des",
                            rows=100, frequency="daily", transformation="none", format="TimeArray",
                            auth_token="")
 
@@ -122,13 +122,14 @@ function interactivequandl(query::AbstractString; page="1", results="20", order=
     if input == "q" || input == "Q" || input == "" # Quit
        	return nothing
     elseif input == "n" || input == "N" # Next page
-    	  return interactivequandl(query, page = string(int(page) + 1), results = results,
+    	  return interactivequandl(query, page = string(parse(Int, page) + 1), results = results,
                                  format = format, auth_token = auth_token)
     else  # Get and return result
-	      return quandl(searches[int(input), :Code],
+	      #return quandl(searches[int(input), :Code],
+        return quandl(searches[parse(Int, input), :Code],
 	                     order = order, rows = rows, frequency = frequency,
                        transformation = transformation, format = format,
-                       auth_token = auth_token)
+                       api_key = auth_token)
     end
 end
 
