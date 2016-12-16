@@ -1,3 +1,7 @@
+### 0.6.1
+
+* fixes typo in interactivequandl method
+
 ### 0.6.0
 
 * support floor of julia 0.5.0

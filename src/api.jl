@@ -102,11 +102,11 @@ function interactivequandl(query::AbstractString; page="1", results="20", order=
     searches = quandlsearch(query, page = page, results = results, format="DataFrame", quiet=true)
 
     # Print results
-    for i in 1:size(searchres, 1)
+    for i in 1:size(searches, 1)
        	print_with_color(:yellow, string(i) * " ")
-       	print_with_color(:blue, string(searchres[i, :Code]))
-       	print_with_color(:black, "   From " * string(searchres[i, :From]) * " to " * string(searchres[i, :To]) * "\n")
-       	print_with_color(:white, "    " * string(searchres[i, :Name]) * "\n")
+       	print_with_color(:blue, string(searches[i, :Code]))
+       	print_with_color(:black, "   From " * string(searches[i, :From]) * " to " * string(searches[i, :To]) * "\n")
+       	print_with_color(:white, "    " * string(searches[i, :Name]) * "\n")
     end
 
     # Print prompt
@@ -125,7 +125,7 @@ function interactivequandl(query::AbstractString; page="1", results="20", order=
     	  return interactivequandl(query, page = string(int(page) + 1), results = results,
                                  format = format, auth_token = auth_token)
     else  # Get and return result
-	      return quandl(searchres[int(input), :Code],
+	      return quandl(searches[int(input), :Code],
 	                     order = order, rows = rows, frequency = frequency,
                        transformation = transformation, format = format,
                        auth_token = auth_token)
