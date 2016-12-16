@@ -129,8 +129,7 @@ Julia's REPL. To use it, simply call ``interactivequandl`` function.
     -------------------------------------------------------------------
     ==>
 
-On the REPL, however, the environment is printed with colors, so it's
-easier to read.
+In REPL, the environment is printed with color and is easier to read.
 
 This function supports one positional argument (the string you are
 searching for), and eight keyword arguments:
