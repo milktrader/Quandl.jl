@@ -1,5 +1,5 @@
 function quandlget(id::AbstractString; order="des", rows=100, frequency="daily", transformation="none",
-                   from="", to="", format="TimeArray", api_key="")
+                   from="", to="", format="TimeArray", api_key="", silent = false)
 
     # verify and use API key
     if api_key==""
@@ -7,10 +7,12 @@ function quandlget(id::AbstractString; order="des", rows=100, frequency="daily",
             println("Note: for unlimited access, you may need to get an API key at quandl.com")
         else
             api_key=readstring(joinpath(dirname(@__FILE__),"../token/auth_token"))
-            if api_key==""
-                println("Note: for unlimited access, you may need to get an API key at quandl.com")
-            else
-                println("Using API key: ", api_key)
+            if !silent
+                if api_key==""
+                    println("Note: for unlimited access, you may need to get an API key at quandl.com")
+                else
+                    println("Using API key: ", api_key)
+                end
             end
         end
     end
