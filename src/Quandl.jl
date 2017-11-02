@@ -4,7 +4,7 @@ using Base.Dates, TimeSeries, DataFrames
 
 module Quandl
 
-using Base.Dates, TimeSeries, DataFrames, Requests
+using Base.Dates, TimeSeries, DataFrames, Requests, CSV
 
 export quandlget,
        quandl,
