@@ -1,4 +1,4 @@
-function quandlget(id::AbstractString; order="des", rows=100, frequency="daily", transformation="none",
+function dataset(id::AbstractString; order="des", rows=100, frequency="daily", transformation="none",
                    from="", to="", format="TimeArray", api_key="", silent=false)
 
     # verify and use API key
@@ -41,5 +41,6 @@ function quandlget(id::AbstractString; order="des", rows=100, frequency="daily",
 end
 
 # alias quandl/quandlget
+quandlget = dataset
 quandl = quandlget
 

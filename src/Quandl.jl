@@ -8,7 +8,7 @@ using Base.Dates, TimeSeries, DataFrames, Requests, CSV
 
 export quandlget,
        quandl,
-       quandldatatable,
+       datatable,
        quandlsearch,
        set_auth_token,
        quandl_api_key,
