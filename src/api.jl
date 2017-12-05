@@ -29,7 +29,8 @@ function quandlapi(path, params::Dict)
 end
 
 # This formats Dict("qopts" => Dict("columns" => ["ticker", "date", "close"]))
-# as Dict("qopts.columns" => ["ticker", "date", "close"])
+# as Dict("qopts.columns" => "ticker,date,close")
+# in order to be processed correctly by the datatable api
 function formatrequestparams(params::Dict)
    outparams = Dict() 
    for (k, v) in params
