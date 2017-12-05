@@ -6,26 +6,21 @@ function set_auth_token(token::AbstractString)
         error("Invalid Token: must be 20 characters long or be an empty string")
     end
 
-    quandl_api_key(token)
+    Quandl.api_key(token)
 
     return nothing
 end
 
 global qapi_key = ""
-function quandl_api_key(api_key::AbstractString="")
+function api_key(api_key::AbstractString="")
     global qapi_key
     # New key to assign
     if length(api_key) > 0
         qapi_key = api_key
 
-        # Create the token directory if needed
-        if !ispath(joinpath(dirname(@__FILE__),"../token/"))
-            mkdir(joinpath(dirname(@__FILE__),"../token/"))
-        end
-
         # Write to the file
         open(joinpath(dirname(@__FILE__),"../token/auth_token"), "w") do token_file
-            write(token_file, token)
+            write(token_file, api_key)
         end
     end
     # if nothing assigned check for old key

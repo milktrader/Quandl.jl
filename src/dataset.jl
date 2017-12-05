@@ -20,6 +20,7 @@ function dataset(id::AbstractString; order="des", rows=100, frequency="daily", t
     
     
     # Backward compatible
+    resp = Void
     try
         resp = quandlapi("datasets/$id.csv", query_args)
     catch err
