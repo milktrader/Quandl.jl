@@ -64,7 +64,7 @@ function quandlsearch(query::AbstractString; page=1, results=20, format="DataFra
 
     # Getting response from Quandl and parsing it
     resp       = get("https://www.quandl.com/api/v1/datasets.json", query = query_args)
-    jsondict   = Requests.json(resp)
+    jsondict   = JSON.parse(String(resp.body))
     data       = jsondict["docs"]
     totalcount = jsondict["total_count"]
 

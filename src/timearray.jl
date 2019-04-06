@@ -1,4 +1,4 @@
-function timearray(resp::Requests.Response)
+function timearray(resp::HTTP.Response)
 
     #This function transform the Response object into a TimeArray
 

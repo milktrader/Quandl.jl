@@ -1,4 +1,4 @@
-function dataframe(resp::Requests.Response)
+function dataframe(resp::HTTP.Response)
 
     df = CSV.read(IOBuffer(Requests.text(resp)))
 
