@@ -6,7 +6,10 @@ function quandlget(id::AbstractString; order="des", rows=100, frequency="daily",
         if !ispath(joinpath(dirname(@__FILE__),"../token/"))
             println("Note: for unlimited access, you may need to get an API key at quandl.com")
         else
-            api_key=readstring(joinpath(dirname(@__FILE__),"../token/auth_token"))
+            api_key_path = joinpath(dirname(@__FILE__),"../token/auth_token")
+            api_key = open(api_key_path) do io
+                read(io, String)
+            end
             if !silent
                 if api_key==""
                     println("Note: for unlimited access, you may need to get an API key at quandl.com")
