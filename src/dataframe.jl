@@ -1,6 +1,6 @@
 function dataframe(resp::HTTP.Response)
 
-    df = CSV.read(IOBuffer(Requests.text(resp)))
+    df = CSV.read(IOBuffer(String(resp.body)))
 
     # force oldest date to first row
 

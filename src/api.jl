@@ -21,7 +21,7 @@ function quandlget(id::AbstractString; order="des", rows=100, frequency="daily",
     end
 
     # Create a dictionary with the Query arguments that we pass to get() function
-    query_args = Dict{Any,Any}("order" => order, "rows" => rows, "collapse" => frequency, "transform" => transformation, "api_key" => api_key)
+    query_args = Dict{String,Any}("order" => order, "rows" => rows, "collapse" => frequency, "transform" => transformation, "api_key" => api_key)
 
     # Ignore rows argument if start or end date range specified
     if from != ""
@@ -35,7 +35,7 @@ function quandlget(id::AbstractString; order="des", rows=100, frequency="daily",
     end
 
     # Get the response from Quandl's API, using Query arguments (see Response.jl README)
-    resp = get("https://www.quandl.com/api/v3/datasets/$id.csv", query = query_args)
+    resp = HTTP.get("https://www.quandl.com/api/v3/datasets/$id.csv"; query = query_args)
 
     # return Union{} in case of fetch error
     if resp.status != 200
