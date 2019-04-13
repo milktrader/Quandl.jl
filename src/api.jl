@@ -6,7 +6,10 @@ function quandlget(id::AbstractString; order="des", rows=100, frequency="daily",
         if !ispath(joinpath(dirname(@__FILE__),"../token/"))
             println("Note: for unlimited access, you may need to get an API key at quandl.com")
         else
-            api_key=readstring(joinpath(dirname(@__FILE__),"../token/auth_token"))
+            api_key_path = joinpath(dirname(@__FILE__),"../token/auth_token")
+            api_key = open(api_key_path) do io
+                read(io, String)
+            end
             if !silent
                 if api_key==""
                     println("Note: for unlimited access, you may need to get an API key at quandl.com")
@@ -18,7 +21,7 @@ function quandlget(id::AbstractString; order="des", rows=100, frequency="daily",
     end
 
     # Create a dictionary with the Query arguments that we pass to get() function
-    query_args = Dict{Any,Any}("order" => order, "rows" => rows, "collapse" => frequency, "transform" => transformation, "api_key" => api_key)
+    query_args = Dict{String,Any}("order" => order, "rows" => rows, "collapse" => frequency, "transform" => transformation, "api_key" => api_key)
 
     # Ignore rows argument if start or end date range specified
     if from != ""
@@ -32,7 +35,7 @@ function quandlget(id::AbstractString; order="des", rows=100, frequency="daily",
     end
 
     # Get the response from Quandl's API, using Query arguments (see Response.jl README)
-    resp = get("https://www.quandl.com/api/v3/datasets/$id.csv", query = query_args)
+    resp = HTTP.get("https://www.quandl.com/api/v3/datasets/$id.csv"; query = query_args)
 
     # return Union{} in case of fetch error
     if resp.status != 200
@@ -64,7 +67,7 @@ function quandlsearch(query::AbstractString; page=1, results=20, format="DataFra
 
     # Getting response from Quandl and parsing it
     resp       = get("https://www.quandl.com/api/v1/datasets.json", query = query_args)
-    jsondict   = Requests.json(resp)
+    jsondict   = JSON.parse(String(resp.body))
     data       = jsondict["docs"]
     totalcount = jsondict["total_count"]
 

@@ -1,9 +1,9 @@
-function timearray(resp::Requests.Response)
+function timearray(resp::HTTP.Response)
 
     #This function transform the Response object into a TimeArray
 
     # Split the data on every "\n"
-    data = split(Requests.text(resp), "\n")
+    data = split(String(resp.body), "\n")
 
     # Extract the head and body of the data
     head = data[1]  
@@ -37,5 +37,5 @@ function timearray(resp::Requests.Response)
     names = split(head, ",")[2:end] # Won't need the Date name (fist column) for TimeArray
     names = String[name for name in names]
 
-    return TimeArray(timestamp, fvals, names)
+    return TimeArray(timestamp, fvals, Symbol.(names))
 end
