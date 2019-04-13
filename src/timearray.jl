@@ -37,5 +37,5 @@ function timearray(resp::HTTP.Response)
     names = split(head, ",")[2:end] # Won't need the Date name (fist column) for TimeArray
     names = String[name for name in names]
 
-    return TimeArray(timestamp, fvals, names)
+    return TimeArray(timestamp, fvals, Symbol.(names))
 end
